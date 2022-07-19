@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
   }
-//temp
+
   * {
     box-sizing: border-box;
   }</style><script>/* globals window */
@@ -23,6 +23,7 @@
     if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
     // eslint-disable-next-line no-var, vars-on-top
     var xhr = new window.XMLHttpRequest();
+      //temp
     xhr.open('POST', '/runtime-error');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.send(
