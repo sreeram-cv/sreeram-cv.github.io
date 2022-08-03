@@ -1,0 +1,4 @@
+/* styles for stories can be written here */
+#header-page-title-container .burger-menu-container .menu-list-container {
+    height: auto; /* adding auto to mock the exisitng usages */
+}

@@ -1,0 +1,30 @@
+/* styles for docs can be written here */
+
+#docs-root {
+	font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+#docs-root .sbdocs-content th:last-child, 
+#docs-root .sbdocs-content td:last-child,
+#docs-root .sbdocs-content th:nth-last-child(2),
+#docs-root .sbdocs-content td:nth-last-child(2),
+#docs-root .sbdocs-preview {
+	display: none;
+}
+
+#docs-root .sbdocs-content th:first-child,
+#docs-root .sbdocs-content td:first-child {
+	max-width: 10%;
+}
+
+.subheading {
+	margin-bottom: 12px !important;
+	font-weight: 600;
+	font-size: 18px !important;
+	color: #12344D;
+}
+
+.docblock-source .os-host{
+	max-height: 350px;
+}
+
