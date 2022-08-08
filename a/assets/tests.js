@@ -4147,6 +4147,42 @@ define("freshservice/tests/data/custom-translations", ["exports"], function (_ex
   };
   _exports.defaultCustomTranslations = defaultCustomTranslations;
 });
+define("freshservice/tests/helpers/ember-basic-dropdown", ["exports", "ember-native-dom-helpers", "ember-basic-dropdown/test-support/helpers"], function (_exports, _emberNativeDomHelpers, _helpers) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "nativeTap", {
+    enumerable: true,
+    get: function get() {
+      return _helpers.nativeTap;
+    }
+  });
+  Object.defineProperty(_exports, "clickTrigger", {
+    enumerable: true,
+    get: function get() {
+      return _helpers.clickTrigger;
+    }
+  });
+  Object.defineProperty(_exports, "tapTrigger", {
+    enumerable: true,
+    get: function get() {
+      return _helpers.tapTrigger;
+    }
+  });
+  Object.defineProperty(_exports, "fireKeydown", {
+    enumerable: true,
+    get: function get() {
+      return _helpers.fireKeydown;
+    }
+  });
+  _exports.nativeClick = _exports.default = void 0;
+  var _default = _helpers.default;
+  _exports.default = _default;
+  var nativeClick = _emberNativeDomHelpers.click;
+  _exports.nativeClick = nativeClick;
+});
 define("freshservice/tests/helpers/ember-cli-clipboard", ["exports", "ember-cli-clipboard/test-support"], function (_exports, _testSupport) {
   "use strict";
 
@@ -5389,11 +5425,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context.next = 4;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
+                  <Admin::Itom::AlertIntegrations::Integrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
                 */
                 {
-                  id: "QHblYCOp",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
+                  id: "IhM1crrT",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5443,11 +5479,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context2.next = 4;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
+                  <Admin::Itom::AlertIntegrations::Integrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
                 */
                 {
-                  id: "QHblYCOp",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
+                  id: "IhM1crrT",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5494,11 +5530,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context3.next = 4;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
+                  <Admin::Itom::AlertIntegrations::Integrations::AdvancedSettings @model={{model}} @navigateOnSuccess={{navigateOnSuccess}} @navigateOnCancel={{navigateOnCancel}}/>
                 */
                 {
-                  id: "QHblYCOp",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
+                  id: "IhM1crrT",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/advanced-settings\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[22,\"model\"],[22,\"navigateOnSuccess\"],[22,\"navigateOnCancel\"]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5570,11 +5606,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context.next = 7;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::AlertPayload @model={{this.model}} @navigateOnSuccess={{this.navigateOnSuccess}} @navigateOnCancel={{this.navigateOnCancel}}/>
+                  <Admin::Itom::AlertIntegrations::Integrations::AlertPayload @model={{this.model}} @navigateOnSuccess={{this.navigateOnSuccess}} @navigateOnCancel={{this.navigateOnCancel}}/>
                 */
                 {
-                  id: "QqQNPQhH",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/alert-payload\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[23,0,[\"model\"]],[23,0,[\"navigateOnSuccess\"]],[23,0,[\"navigateOnCancel\"]]]]]],\"hasEval\":false}",
+                  id: "WgQkfaFz",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/alert-payload\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[23,0,[\"model\"]],[23,0,[\"navigateOnSuccess\"]],[23,0,[\"navigateOnCancel\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5626,11 +5662,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context2.next = 7;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::AlertPayload @model={{this.model}} @navigateOnSuccess={{this.navigateOnSuccess}} @navigateOnCancel={{this.navigateOnCancel}}/>
+                  <Admin::Itom::AlertIntegrations::Integrations::AlertPayload @model={{this.model}} @navigateOnSuccess={{this.navigateOnSuccess}} @navigateOnCancel={{this.navigateOnCancel}}/>
                 */
                 {
-                  id: "QqQNPQhH",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/alert-payload\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[23,0,[\"model\"]],[23,0,[\"navigateOnSuccess\"]],[23,0,[\"navigateOnCancel\"]]]]]],\"hasEval\":false}",
+                  id: "WgQkfaFz",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/alert-payload\",[],[[\"@model\",\"@navigateOnSuccess\",\"@navigateOnCancel\"],[[23,0,[\"model\"]],[23,0,[\"navigateOnSuccess\"]],[23,0,[\"navigateOnCancel\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5692,11 +5728,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context.next = 4;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::ManageIntegrations @model={{this.model}} @navigateToAdvancedSettings={{this.navigateToAdvancedSettings}} @navigateToIntegrationsList={{this.navigateToIntegrationsList}}></Admin::Itom::AlertIntegrations::ManageIntegrations>
+                  <Admin::Itom::AlertIntegrations::Integrations::ManageIntegrations @model={{this.model}} @navigateToAdvancedSettings={{this.navigateToAdvancedSettings}} @navigateToIntegrationsList={{this.navigateToIntegrationsList}}></Admin::Itom::AlertIntegrations::Integrations::ManageIntegrations>
                 */
                 {
-                  id: "8lFy6XI7",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/manage-integrations\",[],[[\"@model\",\"@navigateToAdvancedSettings\",\"@navigateToIntegrationsList\"],[[23,0,[\"model\"]],[23,0,[\"navigateToAdvancedSettings\"]],[23,0,[\"navigateToIntegrationsList\"]]]],{\"statements\":[],\"parameters\":[]}]],\"hasEval\":false}",
+                  id: "X9fIpA5H",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/manage-integrations\",[],[[\"@model\",\"@navigateToAdvancedSettings\",\"@navigateToIntegrationsList\"],[[23,0,[\"model\"]],[23,0,[\"navigateToAdvancedSettings\"]],[23,0,[\"navigateToIntegrationsList\"]]]],{\"statements\":[],\"parameters\":[]}]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -5743,11 +5779,11 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 _context.next = 2;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <Admin::Itom::AlertIntegrations::Onboarding/>
+                  <Admin::Itom::AlertIntegrations::Integrations::Onboarding/>
                 */
                 {
-                  id: "0E6H5fgO",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/onboarding\",[],[[],[]]]],\"hasEval\":false}",
+                  id: "isqPCfTF",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"admin/itom/alert-integrations/integrations/onboarding\",[],[[],[]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -8465,10 +8501,6 @@ define("freshservice/tests/integration/components/admin/module-workspaces/list/c
                 isPlayGod: true
               });
               _context.next = 5;
-              return this.store.findAll('workspace');
-
-            case 5:
-              _context.next = 7;
               return (0, _testHelpers.render)(Ember.HTMLBars.template(
               /*
                 <Admin::ModuleWorkspaces::List/>
@@ -8479,7 +8511,7 @@ define("freshservice/tests/integration/components/admin/module-workspaces/list/c
                 meta: {}
               }));
 
-            case 7:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -8583,11 +8615,10 @@ define("freshservice/tests/integration/components/admin/module-workspaces/list/t
                 }));
 
               case 3:
-                assert.ok(_template.default.templateLogo);
                 assert.ok(_template.default.templateName);
                 assert.ok(_template.default.templateDescription);
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -16561,7 +16592,7 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
       };
     }()); // 10. Filter sidepane render check
 
-    (0, _qunit.test)("it should render filter side panel when filter icon is clicked and check elements", /*#__PURE__*/function () {
+    (0, _qunit.skip)("it should render filter side panel when filter icon is clicked and check elements", /*#__PURE__*/function () {
       var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(assert) {
         var stub, fake, visibleFilterFieldsCount;
         return regeneratorRuntime.wrap(function _callee10$(_context10) {
@@ -18571,6 +18602,282 @@ define("freshservice/tests/integration/components/module-business-objects/record
 
       return function (_x) {
         return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/module-compare-plan/goal-selection/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl", "freshservice/tests/lib/stub-current-account"], function (_qunit, _emberQunit, _testHelpers, _intl, _stubCurrentAccount) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var TEST_ACCOUNT = {
+    subscription: {
+      subscription_plan: 'Starter'
+    }
+  };
+  (0, _qunit.module)('Integration | Component | module-compare-plan/goal-selection', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    hooks.after(function () {
+      this.owner.destroy("service:intl");
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context2.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                // Assert
+                assert.dom('.expore-head').exists('').hasTagName('h4').hasText(this.intl.t("thp_plan.explore_head"));
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('only first goal is selected by default', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        var goals;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context3.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                goals = this.element.querySelectorAll('.explore-item'); // Assert
+
+                assert.dom(goals[0]).exists('first goal exists').hasClass('selected', "first goal is selected by default");
+                assert.dom(goals[1]).exists('second goal exists').doesNotHaveClass('selected', "second goal is not selected by default");
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('only first goal is disabled', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        var goals;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context4.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                goals = this.element.querySelectorAll('.explore-item'); // Assert
+
+                assert.dom(goals[0]).exists('first goal exists').hasClass('default', "first goal is disabled");
+                assert.dom(goals[1]).exists('second goal exists').doesNotHaveClass('default', "second goal is not disabled");
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('unselected goal is selected on clicking', /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(assert) {
+        var goals;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context5.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                goals = this.element.querySelectorAll('.explore-item'); // Assert
+
+                assert.dom(goals[1]).doesNotHaveClass('selected', "currently goal is unselected"); // Act
+
+                _context5.next = 7;
+                return (0, _testHelpers.click)(goals[1]);
+
+              case 7:
+                // Assert
+                assert.dom(goals[1]).hasClass('selected', "unselected goal is selected on clicking");
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      return function (_x4) {
+        return _ref6.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('selected goal is unselected on clicking', /*#__PURE__*/function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(assert) {
+        var goals;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context6.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                goals = this.element.querySelectorAll('.explore-item'); // Assert
+
+                assert.dom(goals[1]).hasClass('selected', "currently goal is selected"); // Act
+
+                _context6.next = 7;
+                return (0, _testHelpers.click)(goals[1]);
+
+              case 7:
+                // Assert
+                assert.dom(goals[1]).doesNotHaveClass('selected', "unselected goal is unselected on clicking");
+
+              case 8:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      return function (_x5) {
+        return _ref7.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('background images are changing on hovering goals', /*#__PURE__*/function () {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(assert) {
+        var goals, lastIndex;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT); // Act
+
+                _context7.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleComparePlan::GoalSelection />
+                */
+                {
+                  id: "mibCq2yA",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-compare-plan/goal-selection\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                goals = this.element.querySelectorAll('.explore-item');
+                lastIndex = this.element.querySelectorAll('.explore-item').length - 1; // Act
+
+                _context7.next = 7;
+                return (0, _testHelpers.triggerEvent)(goals[lastIndex], 'mouseover');
+
+              case 7:
+                // Assert
+                assert.dom('.goal-image').exists().hasClass('optimize_it_operations');
+
+              case 8:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      return function (_x6) {
+        return _ref8.apply(this, arguments);
       };
     }());
   });
@@ -45394,14 +45701,14 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
-                								@model={{this.model}}
-                								@module={{this.module}}
-                								@additionalOps = {{this.additionalOps}}
-                							/>	
+                			@model={{this.model}}
+                			@module={{this.module}}
+                			@additionalOps = {{this.additionalOps}}
+                		/>
                 */
                 {
-                  id: "NNtuQ84j",
-                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]],[0,\"\\t\"]],\"hasEval\":false}",
+                  id: "HJ6QWc9w",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -45417,53 +45724,70 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
 
               case 12:
-                assert.dom('[data-test-task-form="add"]').doesNotExist("Task add modal is closed on clicking close modal");
+                assert.dom('.confirmation-side-modal-content').exists({
+                  count: 1
+                }, "On close click, cancel confirmation modal appears as expected");
                 _context2.next = 15;
-                return (0, _testHelpers.click)('[data-test-task-show-btn]');
+                return (0, _testHelpers.click)('[data-test-id="cancel-confirmation-submit"]');
 
               case 15:
+                assert.dom('[data-test-task-form="add"]').doesNotExist("Task add modal is closed on clicking close modal"); // Task show modal - open & close
+
+                _context2.next = 18;
+                return (0, _testHelpers.click)('[data-test-task-show-btn]');
+
+              case 18:
                 assert.dom('[data-test-task-show-modal]').exists({
                   count: 1
                 }, "Task show modal is open on clicking show task");
-                _context2.next = 18;
+                _context2.next = 21;
                 return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
 
-              case 18:
-                assert.dom('[data-test-task-show-modal]').doesNotExist("Task show modal is closed on clicking close modal");
-                _context2.next = 21;
+              case 21:
+                assert.dom('[data-test-task-show-modal]').doesNotExist("Task show modal is closed on clicking close modal"); // Edit task modal - open & close
+
+                _context2.next = 24;
                 return (0, _testHelpers.click)('[data-test-task-item-more-trigger]');
 
-              case 21:
-                _context2.next = 23;
+              case 24:
+                _context2.next = 26;
                 return (0, _testHelpers.click)('[data-test-task-item-more-edit]');
 
-              case 23:
+              case 26:
                 assert.dom('[data-test-task-form="edit"]').exists({
                   count: 1
                 }, "Task edit modal is open on clicking edit task");
-                _context2.next = 26;
+                _context2.next = 29;
                 return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
 
-              case 26:
-                assert.dom('[data-test-task-form="edit"]').doesNotExist("Task edit modal is closed on clicking close modal");
-                _context2.next = 29;
+              case 29:
+                assert.dom('.confirmation-side-modal-content').exists({
+                  count: 1
+                }, "On close click, cancel confirmation modal appears as expected");
+                _context2.next = 32;
+                return (0, _testHelpers.click)('[data-test-id="cancel-confirmation-submit"]');
+
+              case 32:
+                assert.dom('[data-test-task-form="edit"]').doesNotExist("Task edit modal is closed on clicking close modal"); // Delete task modal - open & close
+
+                _context2.next = 35;
                 return (0, _testHelpers.click)('[data-test-task-item-more-trigger]');
 
-              case 29:
-                _context2.next = 31;
+              case 35:
+                _context2.next = 37;
                 return (0, _testHelpers.click)('[data-test-task-item-more-delete]');
 
-              case 31:
+              case 37:
                 assert.dom('[data-test-task-delete-modal]').exists({
                   count: 1
                 }, "Task delete modal is open on clicking delete task");
-                _context2.next = 34;
+                _context2.next = 40;
                 return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
 
-              case 34:
+              case 40:
                 assert.dom('[data-test-task-delete-modal]').doesNotExist("Task delete modal is closed on clicking close modal");
 
-              case 35:
+              case 41:
               case "end":
                 return _context2.stop();
             }
@@ -45493,14 +45817,14 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
-                								@model={{this.model}}
-                								@module={{this.module}}
-                								@additionalOps = {{this.additionalOps}}
-                							/>	
+                			@model={{this.model}}
+                			@module={{this.module}}
+                			@additionalOps = {{this.additionalOps}}
+                		/>
                 */
                 {
-                  id: "NNtuQ84j",
-                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]],[0,\"\\t\"]],\"hasEval\":false}",
+                  id: "HJ6QWc9w",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -45549,14 +45873,14 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
-                								@model={{this.model}}
-                								@module={{this.module}}
-                								@additionalOps = {{this.additionalOps}}
-                							/>	
+                			@model={{this.model}}
+                			@module={{this.module}}
+                			@additionalOps = {{this.additionalOps}}
+                		/>
                 */
                 {
-                  id: "NNtuQ84j",
-                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]],[0,\"\\t\"]],\"hasEval\":false}",
+                  id: "HJ6QWc9w",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -45567,7 +45891,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
               case 9:
                 assert.dom('[data-test-task-show-modal]').exists({
                   count: 1
-                }, "show modal is open");
+                }, "Task show modal is open");
                 _context4.next = 12;
                 return (0, _testHelpers.click)('[data-test-task-show-modal-more-trigger]');
 
@@ -45577,42 +45901,55 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.click)(nestedEditBtn);
 
               case 15:
+                // Edit button
                 assert.dom('[data-test-task-show-modal]').doesNotExist("Task show modal is closed on clicking edit task inside show more options");
                 assert.dom('[data-test-task-form="edit"]').exists({
                   count: 1
-                }, "edit modal is open");
+                }, "Task edit modal is open"); // Edit modal
+
                 _context4.next = 19;
                 return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
 
               case 19:
-                assert.dom('[data-test-task-form="edit"]').doesNotExist("Task edit modal opened from show modal is closed on clicking close modal");
+                // Close edit modal
+                assert.dom('.confirmation-side-modal-content').exists({
+                  count: 1
+                }, "On close click, cancel confirmation modal appears as expected");
                 _context4.next = 22;
-                return (0, _testHelpers.click)('[data-test-task-show-btn]');
+                return (0, _testHelpers.click)('[data-test-id="cancel-confirmation-submit"]');
 
               case 22:
-                assert.dom('[data-test-task-show-modal]').exists({
-                  count: 1
-                }, "show modal is open");
+                assert.dom('[data-test-task-form="edit"]').doesNotExist("Task edit modal opened from show modal is closed on clicking close modal"); // Task show modal
+
                 _context4.next = 25;
-                return (0, _testHelpers.click)('[data-test-task-show-modal-more-trigger]');
+                return (0, _testHelpers.click)('[data-test-task-show-btn]');
 
               case 25:
-                nestedDelBtn = this.element.querySelector('[data-test-task-show-modal-more-delete]');
+                assert.dom('[data-test-task-show-modal]').exists({
+                  count: 1
+                }, "Task show modal is open");
                 _context4.next = 28;
-                return (0, _testHelpers.click)(nestedDelBtn);
+                return (0, _testHelpers.click)('[data-test-task-show-modal-more-trigger]');
 
               case 28:
+                nestedDelBtn = this.element.querySelector('[data-test-task-show-modal-more-delete]');
+                _context4.next = 31;
+                return (0, _testHelpers.click)(nestedDelBtn);
+
+              case 31:
+                // Delete button
                 assert.dom('[data-test-task-show-modal]').doesNotExist("Task show modal is closed on clicking delete task inside show more options");
                 assert.dom('[data-test-task-delete-modal]').exists({
                   count: 1
-                }, "delete modal is open");
-                _context4.next = 32;
+                }, "Task delete modal is open"); // Delete modal
+
+                _context4.next = 35;
                 return (0, _testHelpers.click)('[data-test-id="modal-cancel"]');
 
-              case 32:
+              case 35:
                 assert.dom('[data-test-task-delete-modal]').doesNotExist("Task delete modal opened from show modal is closed on clicking cancel modal");
 
-              case 33:
+              case 36:
               case "end":
                 return _context4.stop();
             }
@@ -45642,14 +45979,14 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
-                								@model={{this.model}}
-                								@module={{this.module}}
-                								@additionalOps = {{this.additionalOps}}
-                							/>	
+                			@model={{this.model}}
+                			@module={{this.module}}
+                			@additionalOps = {{this.additionalOps}}
+                		/>
                 */
                 {
-                  id: "NNtuQ84j",
-                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]],[0,\"\\t\"]],\"hasEval\":false}",
+                  id: "HJ6QWc9w",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -45660,7 +45997,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
               case 9:
                 assert.dom('[data-test-task-show-modal]').exists({
                   count: 1
-                }, "show modal is open");
+                }, "Task show modal is open");
                 currentTaskStatus = this.element.querySelector('[data-test-task-show-modal-status-update-trigger]').textContent.trim();
                 _context5.next = 13;
                 return (0, _testHelpers.click)('[data-test-task-show-modal-status-update-trigger]');
@@ -45703,14 +46040,14 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
-                								@model={{this.model}}
-                								@module={{this.module}}
-                								@additionalOps = {{this.additionalOps}}
-                							/>	
+                			@model={{this.model}}
+                			@module={{this.module}}
+                			@additionalOps = {{this.additionalOps}}
+                		/>
                 */
                 {
-                  id: "NNtuQ84j",
-                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]],[0,\"\\t\"]],\"hasEval\":false}",
+                  id: "HJ6QWc9w",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\t\"],[5,\"module-tickets/details/tasks\",[],[[\"@model\",\"@module\",\"@additionalOps\"],[[23,0,[\"model\"]],[23,0,[\"module\"]],[23,0,[\"additionalOps\"]]]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
@@ -45721,18 +46058,20 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
               case 9:
                 assert.dom('[data-test-task-show-modal]').exists({
                   count: 1
-                }, "show modal is open");
+                }, "Task show modal is open");
                 taskDisplayId = this.element.querySelector('[data-test-task-show-modal-title]').textContent.trim();
                 _context6.next = 13;
                 return (0, _testHelpers.click)('[data-test-id="pageNavNext"]');
 
               case 13:
+                // next
                 nextTaskDisplayId = this.element.querySelector('[data-test-task-show-modal-title]').textContent.trim();
                 assert.notEqual(taskDisplayId, nextTaskDisplayId, "Navigated to next task");
                 _context6.next = 17;
                 return (0, _testHelpers.click)('[data-test-id="pageNavPrev"]');
 
               case 17:
+                // prev
                 prevTaskDisplayId = this.element.querySelector('[data-test-task-show-modal-title]').textContent.trim();
                 assert.equal(taskDisplayId, prevTaskDisplayId, "Navigated to the prev task");
                 _context6.next = 21;
@@ -47793,6 +48132,87 @@ define("freshservice/tests/integration/components/module-workloads/capacity-view
 
       return function (_x) {
         return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/module-workloads/cell-assignment-slider/component-test", ["qunit", "@ember/test-helpers", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/lib/stub-current-user", "freshservice/tests/lib/stub-current-account", "freshservice/tests/lib/set-locale-timezone-moment"], function (_qunit, _testHelpers, _emberQunit, _testSupport, _intl, _stubCurrentUser, _stubCurrentAccount, _setLocaleTimezoneMoment) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | module-workloads/cell-assignment-slider', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _setLocaleTimezoneMoment.setLocaleAndTimeZoneForMoment)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach(function () {
+      (0, _stubCurrentAccount.stubCurrentAccount)({
+        features: ['fr_project', 'itil_modules']
+      });
+      (0, _stubCurrentUser.stubCurrentUser)({
+        privileges: ['view_changes', 'view_problems', 'view_releases', 'manage_tickets', 'view_projects']
+      });
+      this.server.loadFixtures('users');
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        var currentUserService, momentService, cellDate, ele;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                currentUserService = this.owner.lookup('service:current-user');
+                momentService = this.owner.lookup('service:moment');
+                cellDate = momentService.moment();
+                this.setProperties({
+                  entityFilters: 'release',
+                  cellSelectedUserId: currentUserService.userId,
+                  showCellLevelSlider: true,
+                  cellClickData: {
+                    workItemDate: cellDate.format('D MMMM YYYY'),
+                    period: "".concat(cellDate.startOf('day').toISOString(), ",").concat(cellDate.clone().endOf('day').toISOString()),
+                    cellData: ['50%'],
+                    effortType: 'percent',
+                    sliderStatus: {
+                      objClass: "under",
+                      status: 3
+                    }
+                  }
+                });
+                _context.next = 6;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                     <ModuleWorkloads::CellAssignmentSlider
+                			@entityFilters = {{this.entityFilters}}
+                			@userId = {{this.cellSelectedUserId}}
+                			@isSliderOpen = {{this.showCellLevelSlider}}
+                			@cellClickData={{this.cellClickData}}
+                		/>
+                */
+                {
+                  id: "oihwCWjD",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n     \"],[5,\"module-workloads/cell-assignment-slider\",[],[[\"@entityFilters\",\"@userId\",\"@isSliderOpen\",\"@cellClickData\"],[[23,0,[\"entityFilters\"]],[23,0,[\"cellSelectedUserId\"]],[23,0,[\"showCellLevelSlider\"]],[23,0,[\"cellClickData\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 6:
+                ele = this.element.querySelector('[data-test-id="wlm-mas-overview-allocation-status"]');
+                assert.equal(ele.textContent.trim(), "Low workload");
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
       };
     }());
   });
@@ -68896,6 +69316,220 @@ define("freshservice/tests/integration/components/ui-components/ui-pills/compone
     }());
   });
 });
+define("freshservice/tests/integration/components/ui-components/workspace/breadcrumb/component-test", ["qunit", "@ember/test-helpers", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/lib/stub-current-account", "freshservice/tests/pages/components/ui-components/workspace/breadcrumb"], function (_qunit, _testHelpers, _emberQunit, _testSupport, _intl, _stubCurrentAccount, _breadcrumb) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var CURRENT_WORKSPACE = {
+    "id": 91,
+    "name": "HR Team",
+    "preferences": {},
+    "workspace_logo": "http://localhost.freshservice-dev.com:3000/assets/logos/misc/workspace_logo.ico"
+  };
+  var GLOBAL_CURRENT_WORKSPACE = {
+    "id": 1,
+    "name": "Global Settings",
+    "preferences": {},
+    "workspace_logo": "http://localhost.freshservice-dev.com:3000/assets/logos/misc/workspace_logo.ico"
+  };
+  (0, _qunit.module)('Integration | Component | ui-components/workspace/breadcrumb', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    (0, _qunit.test)('should render breadcrumb component with Admin', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <UiComponents::Workspace::Breadcrumb/>
+                */
+                {
+                  id: "Kh8uhpP5",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"ui-components/workspace/breadcrumb\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.ok(_breadcrumb.default.adminLink);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should render breadcrumb component with custom Workspace', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)({
+                  temp_features: ['esm_enhancements']
+                });
+                window.currentWorkspace = CURRENT_WORKSPACE;
+                _context3.next = 4;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <UiComponents::Workspace::Breadcrumb/>
+                */
+                {
+                  id: "Kh8uhpP5",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"ui-components/workspace/breadcrumb\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 4:
+                assert.ok(_breadcrumb.default.customWorkspace);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should render breadcrumb component with global Workspace', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)({
+                  temp_features: ['esm_enhancements']
+                });
+                window.currentWorkspace = GLOBAL_CURRENT_WORKSPACE;
+                _context4.next = 4;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <UiComponents::Workspace::Breadcrumb/>
+                */
+                {
+                  id: "Kh8uhpP5",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"ui-components/workspace/breadcrumb\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 4:
+                assert.ok(_breadcrumb.default.globalWorkspace);
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/ui-components/workspace/logo/component-test", ["qunit", "@ember/test-helpers", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/pages/components/ui-components/workspace/logo"], function (_qunit, _testHelpers, _emberQunit, _testSupport, _intl, _logo) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var WORKSPACE = {
+    "id": 92,
+    "name": "IT Team",
+    "preferences": {
+      "logo_id": 3
+    },
+    "workspace_logo": null
+  };
+  (0, _qunit.module)('Integration | Component | ui-components/workspace/logo', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    (0, _qunit.test)('should render workspace logo component with logo and name', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.workspace = WORKSPACE;
+                _context2.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <UiComponents::Workspace::Logo @workspace={{this.workspace}}>
+                			<div data-test-id="ws-name">{{this.workspace.name}}</div>
+                		</UiComponents::Workspace::Logo>
+                */
+                {
+                  id: "6xHLShpH",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"ui-components/workspace/logo\",[],[[\"@workspace\"],[[23,0,[\"workspace\"]]]],{\"statements\":[[0,\"\\n\\t\\t\\t\"],[7,\"div\",true],[10,\"data-test-id\",\"ws-name\"],[8],[1,[23,0,[\"workspace\",\"name\"]],false],[9],[0,\"\\n\\t\\t\"]],\"parameters\":[]}]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.ok(_logo.default.workspaceLogo);
+                assert.ok(_logo.default.workspaceName);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
 define("freshservice/tests/integration/helpers/add-default-dash-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
   "use strict";
 
@@ -76002,6 +76636,37 @@ define("freshservice/tests/pages/components/ui-components/ui-pills", ["exports",
 
   _exports.default = _default;
 });
+define("freshservice/tests/pages/components/ui-components/workspace/breadcrumb", ["exports", "ember-cli-page-object"], function (_exports, _emberCliPageObject) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = (0, _emberCliPageObject.create)({
+    globalWorkspace: (0, _emberCliPageObject.isVisible)('[data-test-id="global-workspace"]'),
+    customWorkspace: (0, _emberCliPageObject.isVisible)('[data-test-id="custom-workspace"]'),
+    adminLink: (0, _emberCliPageObject.isVisible)('[data-test-id="admin-link"]')
+  });
+
+  _exports.default = _default;
+});
+define("freshservice/tests/pages/components/ui-components/workspace/logo", ["exports", "ember-cli-page-object"], function (_exports, _emberCliPageObject) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = (0, _emberCliPageObject.create)({
+    workspaceLogo: (0, _emberCliPageObject.isVisible)('[data-test-id="ws-logo"]'),
+    workspaceName: (0, _emberCliPageObject.isVisible)('[data-test-id="ws-name"]')
+  });
+
+  _exports.default = _default;
+});
 define("freshservice/tests/pages/components/utils/form-fields", ["exports", "ember-cli-page-object", "@ember/test-helpers", "ember-power-select/test-support", "ember-power-select/test-support/helpers", "ember-basic-dropdown/test-support/helpers", "moment"], function (_exports, _emberCliPageObject, _testHelpers, _testSupport, _helpers, _helpers2, _moment) {
   "use strict";
 
@@ -77165,6 +77830,18 @@ define("freshservice/tests/unit/adapters/ticket-table-header-test", ["qunit", "e
     });
   });
 });
+define("freshservice/tests/unit/controllers/admin/explore-plan/goal-selection-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Controller | admin/explore-plan/goal-selection', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks); // Replace this with your real tests.
+
+    (0, _qunit.test)('it exists', function (assert) {
+      var controller = this.owner.lookup('controller:admin/explore-plan/goal-selection');
+      assert.ok(controller);
+    });
+  });
+});
 define("freshservice/tests/unit/controllers/marketplace-test", ["qunit", "ember-qunit", "freshservice/constants/admin/marketplace", "sinon"], function (_qunit, _emberQunit, _marketplace, _sinon) {
   "use strict";
 
@@ -77557,6 +78234,17 @@ define("freshservice/tests/unit/models/ticket-table-header-test", ["qunit", "emb
       var store = this.owner.lookup('service:store');
       var model = store.createRecord('ticket-table-header', {});
       assert.ok(model);
+    });
+  });
+});
+define("freshservice/tests/unit/routes/admin/explore-plan/goal-selection-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Route | admin/explore-plan/goal-selection', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks);
+    (0, _qunit.test)('it exists', function (assert) {
+      var route = this.owner.lookup('route:admin/explore-plan/goal-selection');
+      assert.ok(route);
     });
   });
 });
@@ -79897,7 +80585,7 @@ define("freshservice/tests/unit/validators/multi-select-field-email-validator-te
 define('freshservice/config/environment', [], function() {
   
           var exports = {
-            'default': {"marketplaceFreshParentUrl":"https://static.freshcloud.io/fdk/2.0/assets/fresh_parent.js","freshReleasePlatform":{"routeName":"projects","routePath":"project_management"},"modulePrefix":"freshservice","environment":"test","rootURL":"/a/","locationType":"none","EmberENV":{"FEATURES":{},"EXTEND_PROTOTYPES":false,"LOG_STACKTRACE_ON_DEPRECATION":false,"_APPLICATION_TEMPLATE_WRAPPER":false,"_DEFAULT_ASYNC_OBSERVERS":true,"_JQUERY_INTEGRATION":false,"_TEMPLATE_ONLY_GLIMMER_COMPONENTS":true},"APP":{"rootElement":"#ember-testing","LOG_ACTIVE_GENERATION":false,"LOG_VIEW_LOOKUPS":false,"autoboot":false,"renderInEmber":true,"hostURL":"http://localhost.freshservice-dev.com:4000","name":"freshservice","version":"0.0.1+89343c38"},"OPTIONS":{"test":true,"fingerprint":{"enabled":false,"extensions":["js","css","png","jpg","gif","json","svg","js"],"prepend":"http://localhost.freshservice-dev.com:7357/","exclude":["assets/fs-chunk-**"]},"outputPaths":{"app":{"css":{"app":"/assets/freshservice.css","modules/admin/main":"/assets/modules/styles/admin.css","modules/ams/main":"/assets/modules/styles/ams.css","modules/services/main":"/assets/modules/styles/services.css","modules/assets/main":"/assets/modules/styles/assets.css","modules/projects/main":"/assets/modules/styles/projects.css","modules/purchase-order/main":"/assets/modules/styles/purchase-order.css","modules/sam/main":"/assets/modules/styles/sam.css","modules/solutions/main":"/assets/modules/styles/solutions.css","modules/dashboard/main":"/assets/modules/styles/dashboard.css","modules/leaderboard/main":"/assets/modules/styles/leaderboard.css","modules/quest/main":"/assets/modules/styles/quest.css","modules/approvals/main":"/assets/modules/styles/approvals.css","modules/tickets/main":"/assets/modules/styles/tickets.css","modules/catalog/main":"/assets/modules/styles/catalog.css","modules/workloads/main":"/assets/modules/styles/workloads.css"}}},"sourcemaps":{"enabled":false},"minifyCSS":{"enabled":true},"minifyJS":{"enabled":true},"babel":{"plugins":["/Users/sreeramv/Documents/ws/itil/frontend/node_modules/ember-auto-import/babel-plugin/index.js"]},"autoImport":{"alias":{"froala-editor":"froala-editor/js/froala_editor.pkgd.min.js"},"webpack":{"output":{"chunkFilename":"fs-chunk-[name]-[chunkhash].js"}}},"svgJar":{"rootURL":"/a/","sourceDirs":["public/assets/inline-svg"],"optimizer":{"plugins":[{"cleanupIDs":{"minify":false}}]}},"emberHighCharts":{"includeHighCharts":false},"ember-cli-babel":{"includePolyfill":true},"ember-froala-editor":{"plugins":true,"languages":true,"dynamicImportFroala":true},"ember-service-worker":{"enabled":false,"unregister":false,"versionStrategy":"every-build"},"esw-cache-first":{"api_name":"FS-api-cache","apiPatterns":["/api/_/bootstrap/agents_groups","/api/_/ticket_form_fields"]},"hinting":false,"stylelint":{"generateTests":false,"testFailingFiles":false,"testPassingFiles":false}},"moment":{"includeTimezone":"all","includeLocales":["ar","ca","cs","da","de","en","es-do","es","et","fi","fr","hu","id","it","ja","ko","nb","nl","pl","pt-br","pt","ru","sk","sl","sv","tr","vi","zh-cn","uk","he","th","cy","zh-tw","ro","lv","hr"],"allowEmpty":true},"ember-cli-mirage":{"enabled":true,"usingProxy":false,"useDefaultPassthroughs":true},"ember-froala-editor":{"key":"QFF4nB16B10A8A6F6C5A4fLUQZa1ASFe1EFRNc1He1BCCQDUHnD5D4B3C3C3D7A5C2F5A3=="},"buildEnvironment":"test","ember-form-for":{"errorsPath":"validations.attrs.PROPERTY_NAME.errors"},"stackTraceLimit":30,"exportApplicationGlobal":true,"emberHifi":{"debug":false,"connections":[{"name":"NativeAudio","config":{}},{"name":"HLS","config":{}},{"name":"Howler","config":{}}]},"ember-modal-dialog":{},"ember-a11y-testing":{"componentOptions":{"turnAuditOff":true,"excludeAxeCore":true,"axeOptions":{"iframes":false,"reporter":"v2","resultTypes":["violations"],"rules":{"duplicate-id":{"enabled":false},"duplicate-id-active":{"enabled":false},"duplicate-id-aria":{"enabled":false}}}}}}
+            'default': {"marketplaceFreshParentUrl":"https://static.freshcloud.io/fdk/2.0/assets/fresh_parent.js","freshReleasePlatform":{"routeName":"projects","routePath":"project_management"},"modulePrefix":"freshservice","environment":"test","rootURL":"/a/","locationType":"none","EmberENV":{"FEATURES":{},"EXTEND_PROTOTYPES":false,"LOG_STACKTRACE_ON_DEPRECATION":false,"_APPLICATION_TEMPLATE_WRAPPER":false,"_DEFAULT_ASYNC_OBSERVERS":true,"_JQUERY_INTEGRATION":false,"_TEMPLATE_ONLY_GLIMMER_COMPONENTS":true},"APP":{"rootElement":"#ember-testing","LOG_ACTIVE_GENERATION":false,"LOG_VIEW_LOOKUPS":false,"autoboot":false,"renderInEmber":true,"hostURL":"http://localhost.freshservice-dev.com:4000","name":"freshservice","version":"0.0.1+864f4e54"},"OPTIONS":{"test":true,"fingerprint":{"enabled":false,"extensions":["js","css","png","jpg","gif","json","svg","js"],"prepend":"http://localhost.freshservice-dev.com:7357/","exclude":["assets/fs-chunk-**"]},"outputPaths":{"app":{"css":{"app":"/assets/freshservice.css","modules/admin/main":"/assets/modules/styles/admin.css","modules/ams/main":"/assets/modules/styles/ams.css","modules/services/main":"/assets/modules/styles/services.css","modules/assets/main":"/assets/modules/styles/assets.css","modules/projects/main":"/assets/modules/styles/projects.css","modules/purchase-order/main":"/assets/modules/styles/purchase-order.css","modules/sam/main":"/assets/modules/styles/sam.css","modules/solutions/main":"/assets/modules/styles/solutions.css","modules/dashboard/main":"/assets/modules/styles/dashboard.css","modules/leaderboard/main":"/assets/modules/styles/leaderboard.css","modules/quest/main":"/assets/modules/styles/quest.css","modules/approvals/main":"/assets/modules/styles/approvals.css","modules/tickets/main":"/assets/modules/styles/tickets.css","modules/catalog/main":"/assets/modules/styles/catalog.css","modules/workloads/main":"/assets/modules/styles/workloads.css"}}},"sourcemaps":{"enabled":false},"minifyCSS":{"enabled":true},"minifyJS":{"enabled":true},"babel":{"plugins":["/Users/sreeramv/Documents/ws/itil/frontend/node_modules/ember-auto-import/babel-plugin/index.js"]},"autoImport":{"alias":{"froala-editor":"froala-editor/js/froala_editor.pkgd.min.js"},"webpack":{"output":{"chunkFilename":"fs-chunk-[name]-[chunkhash].js"}}},"svgJar":{"rootURL":"/a/","sourceDirs":["public/assets/inline-svg","node_modules/collab-ui/public/assets/images"],"optimizer":{"plugins":[{"cleanupIDs":{"minify":false}}]}},"emberHighCharts":{"includeHighCharts":false},"ember-cli-babel":{"includePolyfill":true},"ember-froala-editor":{"plugins":true,"languages":true,"dynamicImportFroala":true},"ember-service-worker":{"enabled":false,"unregister":false,"versionStrategy":"every-build"},"esw-cache-first":{"api_name":"FS-api-cache","apiPatterns":["/api/_/bootstrap/agents_groups","/api/_/ticket_form_fields"]},"hinting":false,"stylelint":{"generateTests":false,"testFailingFiles":false,"testPassingFiles":false}},"moment":{"includeTimezone":"all","includeLocales":["ar","ca","cs","da","de","en","es-do","es","et","fi","fr","hu","id","it","ja","ko","nb","nl","pl","pt-br","pt","ru","sk","sl","sv","tr","vi","zh-cn","uk","he","th","cy","zh-tw","ro","lv","hr"],"allowEmpty":true},"ember-cli-mirage":{"enabled":true,"usingProxy":false,"useDefaultPassthroughs":true},"ember-froala-editor":{"key":"QFF4nB16B10A8A6F6C5A4fLUQZa1ASFe1EFRNc1He1BCCQDUHnD5D4B3C3C3D7A5C2F5A3=="},"buildEnvironment":"test","ember-form-for":{"errorsPath":"validations.attrs.PROPERTY_NAME.errors"},"stackTraceLimit":30,"exportApplicationGlobal":true,"emberHifi":{"debug":false,"connections":[{"name":"NativeAudio","config":{}},{"name":"HLS","config":{}},{"name":"Howler","config":{}}]},"ember-modal-dialog":{},"ember-a11y-testing":{"componentOptions":{"turnAuditOff":true,"excludeAxeCore":true,"axeOptions":{"iframes":false,"reporter":"v2","resultTypes":["violations"],"rules":{"duplicate-id":{"enabled":false},"duplicate-id-active":{"enabled":false},"duplicate-id-aria":{"enabled":false}}}}}}
           };
           Object.defineProperty(exports, '__esModule', {value: true});
           return exports;
