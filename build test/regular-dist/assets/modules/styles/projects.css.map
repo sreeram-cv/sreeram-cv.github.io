@@ -3,7 +3,7 @@
 	"file": "projects.css",
 	"sourceRoot": "/Users/sreeramv/Documents/ws/itil/frontend/app/styles",
 	"sources": [
-		"../../../../out-1351-broccoli_merge_trees_full_application/app/styles/modules/projects/main.scss"
+		"../../../../out-1356-broccoli_merge_trees_full_application/app/styles/modules/projects/main.scss"
 	],
 	"sourcesContent": [
 		"#ember-body-content {\n\t&.ember-application {\n\t\t.module-projects {\n\t\t\t.projects-content {\n\t\t\t\tmargin: 0;\n\t\t\t\twidth: 100%;\n\t\t\t\tiframe {\n\t\t\t\t\twidth: 100% !important;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
