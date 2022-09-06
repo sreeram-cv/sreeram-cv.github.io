@@ -5677,8 +5677,8 @@ define("freshservice/tests/integration/components/admin/itom/alert-integrations/
                 });
 
               case 9:
-                assert.equal(_customAlertPayload.default.integrationNameText, "Custom Integration integration 1", "Config payload integration name rendered properly");
-                assert.equal(_customAlertPayload.default.titleText, "Configure alert payload | Custom Integration integration 1", "Config payload title rendered properly");
+                assert.equal(_customAlertPayload.default.integrationNameText, "Webhook integration 1", "Config payload integration name rendered properly");
+                assert.equal(_customAlertPayload.default.titleText, "Configure alert payload | Webhook integration 1", "Config payload title rendered properly");
                 assert.equal(_customAlertPayload.default.helptext1Text, "Copy the alert payload sent from your monitoring tool and paste it below.", "Config payload helptext1 rendered properly");
                 assert.equal(_customAlertPayload.default.helptext2Text, "Alert payload should be in JSON format.", "Config payload helptext2 rendered properly");
                 assert.equal(_customAlertPayload.default.externalLinkText, "Learn how", "Config payload external link rendered properly");
@@ -9843,7 +9843,7 @@ define("freshservice/tests/integration/components/app-components/native-integrat
     }());
   });
 });
-define("freshservice/tests/integration/components/app-components/native-integrations/logmein/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/pages/components/app-components/module-native-integrations/logmein", "freshservice/tests/lib/stub-native-service"], function (_qunit, _emberQunit, _testHelpers, _testSupport, _intl, _logmein, _stubNativeService) {
+define("freshservice/tests/integration/components/app-components/native-integrations/logmein/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/pages/components/app-components/module-native-integrations/logmein", "freshservice/tests/lib/stub-native-service", "freshservice/tests/lib/stub-current-user"], function (_qunit, _emberQunit, _testHelpers, _testSupport, _intl, _logmein, _stubNativeService, _stubCurrentUser) {
   "use strict";
 
   function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -9856,6 +9856,15 @@ define("freshservice/tests/integration/components/app-components/native-integrat
 
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+  var PRIVILEGES = {
+    scoped_privileges: {
+      0: ['reply_ticket'],
+      1: [],
+      2: [],
+      3: []
+    },
+    privileges: ['reply_ticket']
+  };
   (0, _qunit.module)('Integration | Component | app-components | LogMeIn', function (hooks) {
     (0, _emberQunit.setupRenderingTest)(hooks);
     (0, _testSupport.setupMirage)(hooks);
@@ -9878,11 +9887,12 @@ define("freshservice/tests/integration/components/app-components/native-integrat
               newMockTicketData = _objectSpread(_objectSpread({}, newMockTicket), {}, {
                 requesterId: newMockTicket.requester_id
               });
+              (0, _stubCurrentUser.stubCurrentUser)(PRIVILEGES);
               this.set('model', mockTicketData);
               this.set('newModel', newMockTicketData);
               this.set('mockFunction', function () {});
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -10197,6 +10207,175 @@ define("freshservice/tests/integration/components/app-components/native-integrat
     //   });
   });
 });
+define("freshservice/tests/integration/components/app-components/native-integrations/time-entry-apps/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "ember-cli-mirage/test-support"], function (_qunit, _emberQunit, _testHelpers, _testSupport) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | app-components | native-integrations | time-entry-apps', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.store = this.owner.lookup('service:store');
+              this.server.loadFixtures("tickets");
+              this.server.loadFixtures('nativeIntegrations');
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    (0, _qunit.test)('checkbox should be checked when it is found is in getIntegratedResourcesData and actiontype is add', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.set('apps', ['freshbooks']);
+                this.set('timeSheetModel', {
+                  id: 1
+                });
+                this.set('model', {
+                  id: '1'
+                });
+                _context2.next = 5;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <AppComponents::NativeIntegrations::TimeEntryApps
+                        @timeEntryModel={{this.timeSheetModel}} 
+                        @model={{this.model}}
+                        @actionType={{'add'}}
+                        @moduleId={{1}}
+                        @nativeApps={{this.apps}}/>
+                */
+                {
+                  id: "+eeUUc34",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"app-components/native-integrations/time-entry-apps\",[],[[\"@timeEntryModel\",\"@model\",\"@actionType\",\"@moduleId\",\"@nativeApps\"],[[23,0,[\"timeSheetModel\"]],[23,0,[\"model\"]],\"add\",1,[23,0,[\"apps\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 5:
+                assert.dom('.app-item').hasNoClass('selected');
+                assert.dom('.native-app-item-content').hasClass('hide');
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('checkbox should not be checked when it is found is in getIntegratedResourcesData and actiontype is edit', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.set('apps', ['freshbooks']);
+                this.set('timeSheetModel', {
+                  id: 1
+                });
+                this.set('model', {
+                  id: '1'
+                });
+                _context3.next = 5;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <AppComponents::NativeIntegrations::TimeEntryApps
+                        @timeEntryModel={{this.timeSheetModel}} 
+                        @model={{this.model}}
+                        @actionType={{'edit'}}
+                        @moduleId={{1}}
+                        @nativeApps={{this.apps}}/>
+                */
+                {
+                  id: "0ENHTCKZ",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"app-components/native-integrations/time-entry-apps\",[],[[\"@timeEntryModel\",\"@model\",\"@actionType\",\"@moduleId\",\"@nativeApps\"],[[23,0,[\"timeSheetModel\"]],[23,0,[\"model\"]],\"edit\",1,[23,0,[\"apps\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 5:
+                assert.dom('.app-item').hasNoClass('selcted');
+                assert.dom('.app-item').hasClass('hide');
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should show content on click of checkbox', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.set('apps', ['freshbooks']);
+                this.set('timeSheetModel', {
+                  id: 1
+                });
+                this.set('model', {
+                  id: '1'
+                });
+                _context4.next = 5;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <AppComponents::NativeIntegrations::TimeEntryApps
+                        @timeEntryModel={{this.timeSheetModel}} 
+                        @model={{this.model}}
+                        @actionType={{'add'}}
+                        @moduleId={{1}}
+                        @nativeApps={{this.apps}}/>
+                */
+                {
+                  id: "+eeUUc34",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"app-components/native-integrations/time-entry-apps\",[],[[\"@timeEntryModel\",\"@model\",\"@actionType\",\"@moduleId\",\"@nativeApps\"],[[23,0,[\"timeSheetModel\"]],[23,0,[\"model\"]],\"add\",1,[23,0,[\"apps\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 5:
+                assert.dom('.app-item').hasNoClass('selcted');
+                assert.dom('.native-app-item-content').hasClass('hide');
+                _context4.next = 9;
+                return (0, _testHelpers.click)('.native-app-item-header');
+
+              case 9:
+                assert.dom('.app-item').hasClass('selected');
+                assert.dom('.native-app-item-content').hasNoClass('hide');
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+});
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 define("freshservice/tests/integration/components/app-components/requester-info/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/pages/components/app-components/requester-info/requester", "freshservice/mirage/fixtures/recent-tickets", "freshservice/tests/lib/stub-current-account", "freshservice/tests/lib/sinon-context", "freshservice/tests/lib/stub-native-service", "moment"], function (_qunit, _emberQunit, _testHelpers, _testSupport, _intl, _requester, _recentTickets, _stubCurrentAccount, _sinonContext, _stubNativeService, _moment) {
@@ -10258,6 +10437,32 @@ define("freshservice/tests/integration/components/app-components/requester-info/
 
   window.__CLASSIC_OWN_CLASSES__.set(MockService1, true);
 
+  var MockFieldsService = /*#__PURE__*/function (_Ember$Service2) {
+    _inherits(MockFieldsService, _Ember$Service2);
+
+    var _super2 = _createSuper(MockFieldsService);
+
+    function MockFieldsService() {
+      var _this2;
+
+      _classCallCheck(this, MockFieldsService);
+
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      _this2 = _super2.call.apply(_super2, [this].concat(args));
+
+      _defineProperty(_assertThisInitialized(_this2), "ticketStatusActiveChoicesIds", [2, 3, 4]);
+
+      return _this2;
+    }
+
+    return MockFieldsService;
+  }(Ember.Service);
+
+  window.__CLASSIC_OWN_CLASSES__.set(MockFieldsService, true);
+
   var DEF_TIME_FORMAT = 'h:mm A';
   var DEFAULT_START_TIME = '12:00 AM';
   var DEFAULT_END_TIME = '12:30 AM';
@@ -10294,6 +10499,7 @@ define("freshservice/tests/integration/components/app-components/requester-info/
             case 0:
               appendWormholeElem();
               this.owner.register('service:marketplaceAdapter', MockService1);
+              this.owner.register('service:moduleFields', MockFieldsService);
               (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT);
               this.store = this.owner.lookup('service:store');
               this.moment = this.owner.lookup('service:moment');
@@ -10314,7 +10520,7 @@ define("freshservice/tests/integration/components/app-components/requester-info/
               this.set('newModel', mockNewTicketData);
               this.set('currentDate', new Date(new Date().setHours(0, 0, 0, 0)));
 
-            case 17:
+            case 18:
             case "end":
               return _context.stop();
           }
@@ -11251,7 +11457,7 @@ define("freshservice/tests/integration/components/app-components/requester-info/
                 return selectSalesforce();
 
               case 7:
-                assert.equal(_requester.default.salesforceError, "Unknown server error. Please contact support@freshdesk.com.");
+                assert.equal(_requester.default.salesforceError, "Unknown server error. Please contact support@freshservice.com.");
 
               case 8:
               case "end":
@@ -14192,8 +14398,7 @@ define("freshservice/tests/integration/components/module-ams/details/alert-assoc
     subject: "Sample Message 84",
     description: "Sample Description 44",
     integrationName: "CI 1",
-    sourceName: "Custom Integration",
-    alertProfileName: "AP 1"
+    sourceName: "Webhook"
   };
   var TEST_ALERT_WITHOUT_INCIDENT_ID = {
     id: 117,
@@ -14214,8 +14419,7 @@ define("freshservice/tests/integration/components/module-ams/details/alert-assoc
     subject: "Sample Message 84",
     description: "Sample Description 44",
     integrationName: "CI 1",
-    sourceName: "Custom Integration",
-    alertProfileName: "AP 1"
+    sourceName: "Webhook"
   };
   var FAILURE_TOASTR_MESSAGE = "Something went wrong. Please try again later.";
 
@@ -14535,7 +14739,6 @@ define("freshservice/tests/integration/components/module-ams/details/component-t
                 assert.equal(_alertDetails.default.breadcrumbTitle, "#Alert-1", "Breadcrumb has '#Alert-1' as expected");
                 assert.ok(_alertDetails.default.isSubjectVisible, "Subject is present as expected");
                 assert.ok(_alertDetails.default.isDateTimeDetailsVisible, "Date time details are present as expected");
-                assert.ok(_alertDetails.default.isAlertProfileDetailsVisible, "Alert profile details is present as expected");
                 assert.ok(_alertDetails.default.isDescriptionVisible, "Description is present as expected");
                 assert.ok(_alertDetails.default.isAssociationBtnVisible, "Association button is present as expected");
                 assert.ok(_alertDetails.default.isAlertPropertiesVisible, "Alert properties sidepane is present as expected");
@@ -14544,7 +14747,7 @@ define("freshservice/tests/integration/components/module-ams/details/component-t
                 assert.ok(_alertDetails.default.isAlertLogsTabActive, "Alert logs tab is active as expected");
                 assert.ok(_alertDetails.default.isAlertLogsTableVisible, "Alert logs table is present as expected");
 
-              case 18:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -15937,12 +16140,12 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
   }
 
   function _renderComponent() {
-    _renderComponent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
-      return regeneratorRuntime.wrap(function _callee18$(_context18) {
+    _renderComponent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+      return regeneratorRuntime.wrap(function _callee17$(_context17) {
         while (1) {
-          switch (_context18.prev = _context18.next) {
+          switch (_context17.prev = _context17.next) {
             case 0:
-              _context18.next = 2;
+              _context17.next = 2;
               return (0, _testHelpers.render)(Ember.HTMLBars.template(
               /*
                 <ModuleAms::List
@@ -15971,10 +16174,10 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
 
             case 2:
             case "end":
-              return _context18.stop();
+              return _context17.stop();
           }
         }
-      }, _callee18);
+      }, _callee17);
     }));
     return _renderComponent.apply(this, arguments);
   }
@@ -16996,7 +17199,7 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
       return function (_x15) {
         return _ref16.apply(this, arguments);
       };
-    }()); //16. Check alerts table, when 'alert_ingestion' & 'alert_management' is enabled
+    }()); //16. Check alerts table, 'alert_management' is enabled
 
     (0, _qunit.test)("it should render add integration card, if table is empty", /*#__PURE__*/function () {
       var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(assert) {
@@ -17006,10 +17209,8 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
             switch (_context16.prev = _context16.next) {
               case 0:
                 // Arrange
-                stub = _sinon.default.stub(); //TODO: Need to remove after alert ingetion enabled to all users.
-
+                stub = _sinon.default.stub();
                 (0, _stubCurrentAccount.stubCurrentAccount)({
-                  temp_features: ['alert_ingestion'],
                   features: ['alert_management']
                 });
                 this.setProperties({
@@ -17054,64 +17255,6 @@ define("freshservice/tests/integration/components/module-ams/list/component-test
 
       return function (_x16) {
         return _ref17.apply(this, arguments);
-      };
-    }()); //17. Check alerts table, when 'alert_ingestion' is enabled & 'alert_management' is disabled
-
-    (0, _qunit.test)("it should render enable ams card, if table is empty", /*#__PURE__*/function () {
-      var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(assert) {
-        var stub;
-        return regeneratorRuntime.wrap(function _callee17$(_context17) {
-          while (1) {
-            switch (_context17.prev = _context17.next) {
-              case 0:
-                // Arrange
-                stub = _sinon.default.stub(); //TODO: Need to remove after alert ingetion enabled to all users.
-
-                (0, _stubCurrentAccount.stubCurrentAccount)({
-                  temp_features: ['alert_ingestion']
-                });
-                this.setProperties({
-                  model: Ember.A([]),
-                  meta: {
-                    current: 1,
-                    next: null,
-                    prev: null,
-                    last: 1,
-                    total_count: 0,
-                    count: 0
-                  },
-                  page: 1,
-                  dir: "desc",
-                  sortBy: "updated_at",
-                  filter: null,
-                  toggleSidebar: stub,
-                  isSidebarEnabled: false,
-                  setPageNav: stub,
-                  sortPaginate: stub,
-                  applyFilter: stub,
-                  resetFilter: stub,
-                  setColumns: stub,
-                  resetQPToDefaults: stub
-                }); // Act
-
-                _context17.next = 5;
-                return renderComponent();
-
-              case 5:
-                assert.ok(_alertList.default.isTableEmpty, "Alerts table has default/empty state displayed.");
-                assert.ok(_alertList.default.isAlertsTableDisabled, "Alerts table is disabled.");
-                assert.ok(_alertList.default.hasEnableAmsCard, "Enable ams card is rendered as expected.");
-
-              case 8:
-              case "end":
-                return _context17.stop();
-            }
-          }
-        }, _callee17, this);
-      }));
-
-      return function (_x17) {
-        return _ref18.apply(this, arguments);
       };
     }());
   });
@@ -18095,6 +18238,171 @@ define("freshservice/tests/integration/components/module-ams/services/details/co
                 assert.equal(_serviceDetails.default.contracts, 3, 'Service has 3 associated contracts');
 
               case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/module-ams/services/details/delete-service-modal/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "ember-cli-mirage/test-support", "freshservice/tests/pages/components/module-ams/delete-service", "freshservice/tests/lib/sinon-context", "freshservice/tests/lib/intl", "freshservice/tests/lib/stub-current-account"], function (_qunit, _emberQunit, _testHelpers, _testSupport, _deleteService, _sinonContext, _intl, _stubCurrentAccount) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var TEST_ACCOUNT = {
+    features: ['service_awareness'],
+    temp_features: ['service_health']
+  };
+  (0, _qunit.module)('Integration | Component | module-ams | services | details | delete-service-modal', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    (0, _sinonContext.setupSinonSandbox)(hooks);
+    hooks.beforeEach(function () {
+      (0, _stubCurrentAccount.stubCurrentAccount)(TEST_ACCOUNT);
+      this.intl = this.owner.lookup("service:intl");
+      this.server.loadFixtures('services');
+    });
+    (0, _qunit.test)('it should delete the service if it has integration mapping', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.setProperties({
+                  model: {
+                    id: 1
+                  }
+                });
+                _context.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleAms::Services::Details @model={{this.model}}/>
+                */
+                {
+                  id: "Z58eUPo+",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-ams/services/details\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                _context.next = 5;
+                return (0, _testHelpers.waitFor)('.services-details', {
+                  timeout: 4000
+                });
+
+              case 5:
+                assert.ok(_deleteService.default.isDetailsVisible, "Service details page rendered successfully");
+                _context.next = 8;
+                return _deleteService.default.clickIntegrationTab();
+
+              case 8:
+                _context.next = 10;
+                return (0, _testHelpers.waitFor)('.integration-list', {
+                  timeout: 8000
+                });
+
+              case 10:
+                _context.next = 12;
+                return _deleteService.default.clickDropDownBtn();
+
+              case 12:
+                _context.next = 14;
+                return (0, _testHelpers.waitFor)('.ember-basic-dropdown-content', {
+                  timeout: 4000
+                });
+
+              case 14:
+                assert.ok(_deleteService.default.isDropDownVisible, "Dropdown rendered successfully");
+                _context.next = 17;
+                return _deleteService.default.clickDeleteBtn();
+
+              case 17:
+                _context.next = 19;
+                return (0, _testHelpers.waitFor)('.service-delete-modal', {
+                  timeout: 4000
+                });
+
+              case 19:
+                _context.next = 21;
+                return _deleteService.default.clickDeleteService();
+
+              case 21:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it should delete the service if no integration mapping', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.setProperties({
+                  model: {
+                    id: 101
+                  }
+                });
+                _context2.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleAms::Services::Details @model={{this.model}}/>
+                */
+                {
+                  id: "Z58eUPo+",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-ams/services/details\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                _context2.next = 5;
+                return (0, _testHelpers.waitFor)('.services-details', {
+                  timeout: 4000
+                });
+
+              case 5:
+                assert.ok(_deleteService.default.isDetailsVisible, "Service details page rendered successfully");
+                _context2.next = 8;
+                return _deleteService.default.clickIntegrationTab();
+
+              case 8:
+                _context2.next = 10;
+                return (0, _testHelpers.waitFor)('.default-content', {
+                  timeout: 8000
+                });
+
+              case 10:
+                _context2.next = 12;
+                return _deleteService.default.clickDropDownBtn();
+
+              case 12:
+                _context2.next = 14;
+                return (0, _testHelpers.waitFor)('.ember-basic-dropdown-content', {
+                  timeout: 4000
+                });
+
+              case 14:
+                assert.ok(_deleteService.default.isDropDownVisible, "Dropdown rendered successfully");
+                _context2.next = 17;
+                return _deleteService.default.clickDeleteBtn();
+
+              case 17:
               case "end":
                 return _context2.stop();
             }
@@ -19670,6 +19978,12 @@ define("freshservice/tests/integration/components/module-kanban-board/board-view
           switch (_context.prev = _context.next) {
             case 0:
               curUser = {
+                scoped_privileges: {
+                  0: ['edit_ticket_properties', 'manage_users', 'reply_ticket', 'forward_ticket'],
+                  1: [],
+                  2: [],
+                  3: []
+                },
                 privileges: ['edit_ticket_properties', 'manage_users', 'reply_ticket', 'forward_ticket']
               };
               (0, _stubCurrentUser.stubCurrentUser)(curUser);
@@ -20486,6 +20800,12 @@ define("freshservice/tests/integration/components/module-kanban-board/ticket-sum
           switch (_context.prev = _context.next) {
             case 0:
               curUser = {
+                scoped_privileges: {
+                  0: ['edit_ticket_properties', 'manage_users', 'reply_ticket', 'forward_ticket'],
+                  1: [],
+                  2: [],
+                  3: []
+                },
                 privileges: ['edit_ticket_properties', 'manage_users', 'reply_ticket', 'forward_ticket']
               };
               (0, _stubCurrentUser.stubCurrentUser)(curUser);
@@ -28510,26 +28830,26 @@ define("freshservice/tests/integration/components/module-service-request/detail/
     userEmail: 'sample@freshservice.com'
   };
   (0, _qunit.module)('Integration | Component | module-service-request/detail', /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee34(hooks) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee36(hooks) {
       var renderComponent, _renderComponent;
 
-      return regeneratorRuntime.wrap(function _callee34$(_context34) {
+      return regeneratorRuntime.wrap(function _callee36$(_context36) {
         while (1) {
-          switch (_context34.prev = _context34.next) {
+          switch (_context36.prev = _context36.next) {
             case 0:
               _renderComponent = function _renderComponent3() {
-                _renderComponent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee33(testInstance) {
+                _renderComponent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee35(testInstance) {
                   var itemId,
                       model,
-                      _args33 = arguments;
-                  return regeneratorRuntime.wrap(function _callee33$(_context33) {
+                      _args35 = arguments;
+                  return regeneratorRuntime.wrap(function _callee35$(_context35) {
                     while (1) {
-                      switch (_context33.prev = _context33.next) {
+                      switch (_context35.prev = _context35.next) {
                         case 0:
-                          itemId = _args33.length > 1 && _args33[1] !== undefined ? _args33[1] : ITEMS.ALL_VISIBLE_ITEM;
+                          itemId = _args35.length > 1 && _args35[1] !== undefined ? _args35[1] : ITEMS.ALL_VISIBLE_ITEM;
                           model = testInstance.store.peekRecord('service-item', itemId);
                           testInstance.set('model', model);
-                          _context33.next = 5;
+                          _context35.next = 5;
                           return (0, _testHelpers.render)(Ember.HTMLBars.template(
                           /*
                             
@@ -28550,10 +28870,10 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
                         case 5:
                         case "end":
-                          return _context33.stop();
+                          return _context35.stop();
                       }
                     }
-                  }, _callee33);
+                  }, _callee35);
                 }));
                 return _renderComponent.apply(this, arguments);
               };
@@ -29653,7 +29973,7 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
               (0, _qunit.test)('it should copy parent fields values to child fields', /*#__PURE__*/function () {
                 var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(assert) {
-                  var moment, day, nextDay, parentPronoun, childPronoun, parentDetectives, childDetectives, parentCategory, childCategory;
+                  var moment, day, nextDay, parentPronoun, childPronoun, parentDetectives, childDetectives, parentToday, childToday, parentNow, childNow, parentCategory, childCategory;
                   return regeneratorRuntime.wrap(function _callee24$(_context24) {
                     while (1) {
                       switch (_context24.prev = _context24.next) {
@@ -29769,27 +30089,43 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
                         case 62:
                           childDetectives = _context24.sent;
-                          assert.notEqual(parentDetectives.selected, childDetectives.selected, 'Detectives field should not match'); // 		let parentToday = await FormFields.getDataForField('customField.today', true);
-                          // 		let childToday = await FormFields.getDataForField('today', true);
-                          // 		assert.equal(parentToday.selected, childToday.selected, 'Date field should match');
-                          // 		let parentNow = await FormFields.getDataForField('customField.now', true);
-                          // 		let childNow = await FormFields.getDataForField('now', true);
-                          // 		assert.equal(parentNow.selected, childNow.selected, 'Date field should match');
-
+                          assert.notEqual(parentDetectives.selected, childDetectives.selected, 'Detectives field should not match');
                           _context24.next = 66;
-                          return _formFields.default.getDataForField('customField.cat', true);
+                          return _formFields.default.getDataForField('customField.today', true);
 
                         case 66:
-                          parentCategory = _context24.sent;
+                          parentToday = _context24.sent;
                           _context24.next = 69;
-                          return _formFields.default.getDataForField('cat', true);
+                          return _formFields.default.getDataForField('today', true);
 
                         case 69:
+                          childToday = _context24.sent;
+                          assert.equal(parentToday.selected, childToday.selected, 'Date field should match');
+                          _context24.next = 73;
+                          return _formFields.default.getDataForField('customField.now', true);
+
+                        case 73:
+                          parentNow = _context24.sent;
+                          _context24.next = 76;
+                          return _formFields.default.getDataForField('now', true);
+
+                        case 76:
+                          childNow = _context24.sent;
+                          assert.deepEqual(parentNow.selected, childNow.selected, 'Date time field should match');
+                          _context24.next = 80;
+                          return _formFields.default.getDataForField('customField.cat', true);
+
+                        case 80:
+                          parentCategory = _context24.sent;
+                          _context24.next = 83;
+                          return _formFields.default.getDataForField('cat', true);
+
+                        case 83:
                           childCategory = _context24.sent;
                           assert.notEqual(parentCategory.selected, childCategory.selected, 'Category field should not match');
                           assert.notOk(_fields.default.isSubCategoryVisible, 'Child Sub category should be hidden');
 
-                        case 72:
+                        case 86:
                         case "end":
                           return _context24.stop();
                       }
@@ -29804,7 +30140,7 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
               (0, _qunit.test)('it should not copy parent fields values to child fields', /*#__PURE__*/function () {
                 var _ref27 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(assert) {
-                  var moment, day, nextDay, childPronoun, childDetectives, childCategory;
+                  var moment, day, nextDay, childPronoun, childDetectives, childToday, childNow, childCategory;
                   return regeneratorRuntime.wrap(function _callee25$(_context25) {
                     while (1) {
                       switch (_context25.prev = _context25.next) {
@@ -29906,22 +30242,29 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
                         case 54:
                           childDetectives = _context25.sent;
-                          assert.equal(childDetectives.selected, null, 'Detectives field should be empty'); // 		let parentToday = await FormFields.getDataForField('customField.today', true);
-                          // 		let childToday = await FormFields.getDataForField('today', true);
-                          // 		assert.equal(parentToday.selected, childToday.selected, 'Date field should match');
-                          // 		let parentNow = await FormFields.getDataForField('customField.now', true);
-                          // 		let childNow = await FormFields.getDataForField('now', true);
-                          // 		assert.equal(parentNow.selected, childNow.selected, 'Date field should match');
-
+                          assert.equal(childDetectives.selected, null, 'Detectives field should be empty');
                           _context25.next = 58;
-                          return _formFields.default.getDataForField('cat', true);
+                          return _formFields.default.getDataForField('today', true);
 
                         case 58:
+                          childToday = _context25.sent;
+                          assert.equal(childToday.selected, "", 'Date field should be empty');
+                          _context25.next = 62;
+                          return _formFields.default.getDataForField('now', true);
+
+                        case 62:
+                          childNow = _context25.sent;
+                          assert.equal(childNow.selected[0], "", 'Date time field - date should be empty');
+                          assert.equal(childNow.selected[1], undefined, 'Date time field - time should be empty');
+                          _context25.next = 67;
+                          return _formFields.default.getDataForField('cat', true);
+
+                        case 67:
                           childCategory = _context25.sent;
                           assert.equal(childCategory.selected, null, 'Category field should be empty');
                           assert.notOk(_fields.default.isSubCategoryVisible, 'Child Sub category should be hidden');
 
-                        case 61:
+                        case 70:
                         case "end":
                           return _context25.stop();
                       }
@@ -29936,7 +30279,7 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
               (0, _qunit.test)('it should copy parent fields values only after selecting the child items', /*#__PURE__*/function () {
                 var _ref28 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(assert) {
-                  var moment, day, nextDay, childPronoun, childDetectives, parentPronoun, parentDetectives, parentCategory, childCategory;
+                  var moment, day, nextDay, childPronoun, childDetectives, parentPronoun, parentDetectives, parentToday, childToday, parentNow, childNow, parentCategory, childCategory;
                   return regeneratorRuntime.wrap(function _callee26$(_context26) {
                     while (1) {
                       switch (_context26.prev = _context26.next) {
@@ -30071,27 +30414,43 @@ define("freshservice/tests/integration/components/module-service-request/detail/
 
                         case 77:
                           childDetectives = _context26.sent;
-                          assert.notEqual(parentDetectives.selected, childDetectives.selected, 'Detectives field should not match'); // 		let parentToday = await FormFields.getDataForField('customField.today', true);
-                          // 		let childToday = await FormFields.getDataForField('today', true);
-                          // 		assert.equal(parentToday.selected, childToday.selected, 'Date field should match');
-                          // 		let parentNow = await FormFields.getDataForField('customField.now', true);
-                          // 		let childNow = await FormFields.getDataForField('now', true);
-                          // 		assert.equal(parentNow.selected, childNow.selected, 'Date field should match');
-
+                          assert.notEqual(parentDetectives.selected, childDetectives.selected, 'Detectives field should not match');
                           _context26.next = 81;
-                          return _formFields.default.getDataForField('customField.cat', true);
+                          return _formFields.default.getDataForField('customField.today', true);
 
                         case 81:
-                          parentCategory = _context26.sent;
+                          parentToday = _context26.sent;
                           _context26.next = 84;
-                          return _formFields.default.getDataForField('cat', true);
+                          return _formFields.default.getDataForField('today', true);
 
                         case 84:
+                          childToday = _context26.sent;
+                          assert.equal(parentToday.selected, childToday.selected, 'Date field should match');
+                          _context26.next = 88;
+                          return _formFields.default.getDataForField('customField.now', true);
+
+                        case 88:
+                          parentNow = _context26.sent;
+                          _context26.next = 91;
+                          return _formFields.default.getDataForField('now', true);
+
+                        case 91:
+                          childNow = _context26.sent;
+                          assert.deepEqual(parentNow.selected, childNow.selected, 'Date time field should match');
+                          _context26.next = 95;
+                          return _formFields.default.getDataForField('customField.cat', true);
+
+                        case 95:
+                          parentCategory = _context26.sent;
+                          _context26.next = 98;
+                          return _formFields.default.getDataForField('cat', true);
+
+                        case 98:
                           childCategory = _context26.sent;
                           assert.notEqual(parentCategory.selected, childCategory.selected, 'Category field should not match');
                           assert.notOk(_fields.default.isSubCategoryVisible, 'Child Sub category should be hidden');
 
-                        case 87:
+                        case 101:
                         case "end":
                           return _context26.stop();
                       }
@@ -30478,14 +30837,219 @@ define("freshservice/tests/integration/components/module-service-request/detail/
                 return function (_x33) {
                   return _ref34.apply(this, arguments);
                 };
+              }()); // --------- New Requester email addition cases ---------
+
+              (0, _qunit.test)('it should show validate accepted email / name formats for requester fields', /*#__PURE__*/function () {
+                var _ref35 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee33(assert) {
+                  var saveCallbackSpy;
+                  return regeneratorRuntime.wrap(function _callee33$(_context33) {
+                    while (1) {
+                      switch (_context33.prev = _context33.next) {
+                        case 0:
+                          saveCallbackSpy = _sinon.default.spy();
+                          this.set('onModelSaveCallback', saveCallbackSpy);
+                          _context33.next = 4;
+                          return renderComponent(this);
+
+                        case 4:
+                          _context33.next = 6;
+                          return _detail.default.reqInfo.clickReqField();
+
+                        case 6:
+                          _context33.next = 8;
+                          return _detail.default.reqInfo.fillReqField('newemailgoogle.com');
+
+                        case 8:
+                          _context33.next = 10;
+                          return _fields.default.placeReq();
+
+                        case 10:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'email', 'requester email field should throw email validation error');
+                          _context33.next = 14;
+                          return _detail.default.reqInfo.clickReqField();
+
+                        case 14:
+                          _context33.next = 16;
+                          return _detail.default.reqInfo.fillReqField('newemail@google.com');
+
+                        case 16:
+                          _context33.next = 18;
+                          return _detail.default.reqInfo.clickReqForCheckbox();
+
+                        case 18:
+                          _context33.next = 20;
+                          return _detail.default.reqInfo.clickReqForField();
+
+                        case 20:
+                          _context33.next = 22;
+                          return _detail.default.reqInfo.fillReqForField('reqforgoogle.com');
+
+                        case 22:
+                          _context33.next = 24;
+                          return _fields.default.placeReq();
+
+                        case 24:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'requestedFor', 'requester for email field should throw email validation error');
+                          _context33.next = 28;
+                          return _detail.default.reqInfo.clickReqForField();
+
+                        case 28:
+                          _context33.next = 30;
+                          return _detail.default.reqInfo.fillReqForField('reqfor@google.com');
+
+                        case 30:
+                          _context33.next = 32;
+                          return _detail.default.reqInfo.clickBtnAddCC();
+
+                        case 32:
+                          _context33.next = 34;
+                          return _detail.default.reqInfo.fillAddCC('randomdfsdfs.com');
+
+                        case 34:
+                          _context33.next = 36;
+                          return _fields.default.placeReq();
+
+                        case 36:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'ccEmails', 'cc emails field should throw email validation error');
+                          _context33.next = 40;
+                          return _detail.default.reqInfo.clearAddCC();
+
+                        case 40:
+                          _context33.next = 42;
+                          return _detail.default.reqInfo.fillAddCC('random@dfsdfs.com');
+
+                        case 42:
+                          _context33.next = 44;
+                          return _fields.default.placeReq();
+
+                        case 44:
+                          assert.equal(_fields.default.errorFields.length, 0, 'No of error fields match');
+                          assert.ok(saveCallbackSpy.calledOnce, 'Service Request Placed');
+
+                        case 46:
+                        case "end":
+                          return _context33.stop();
+                      }
+                    }
+                  }, _callee33, this);
+                }));
+
+                return function (_x34) {
+                  return _ref35.apply(this, arguments);
+                };
+              }());
+              (0, _qunit.test)('it should show validate accepted email with name formats for requester fields', /*#__PURE__*/function () {
+                var _ref36 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee34(assert) {
+                  var saveCallbackSpy;
+                  return regeneratorRuntime.wrap(function _callee34$(_context34) {
+                    while (1) {
+                      switch (_context34.prev = _context34.next) {
+                        case 0:
+                          saveCallbackSpy = _sinon.default.spy();
+                          this.set('onModelSaveCallback', saveCallbackSpy);
+                          _context34.next = 4;
+                          return renderComponent(this);
+
+                        case 4:
+                          _context34.next = 6;
+                          return _detail.default.reqInfo.clickReqField();
+
+                        case 6:
+                          _context34.next = 8;
+                          return _detail.default.reqInfo.fillReqField('newemailgoogle.com');
+
+                        case 8:
+                          _context34.next = 10;
+                          return _fields.default.placeReq();
+
+                        case 10:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'email', 'requester email field should throw email validation error');
+                          _context34.next = 14;
+                          return _detail.default.reqInfo.clickReqField();
+
+                        case 14:
+                          _context34.next = 16;
+                          return _detail.default.reqInfo.fillReqField('new email <newemail@google.com>');
+
+                        case 16:
+                          _context34.next = 18;
+                          return _detail.default.reqInfo.clickReqForCheckbox();
+
+                        case 18:
+                          _context34.next = 20;
+                          return _detail.default.reqInfo.clickReqForField();
+
+                        case 20:
+                          _context34.next = 22;
+                          return _detail.default.reqInfo.fillReqForField('rew google <reqforgoogle.com>');
+
+                        case 22:
+                          _context34.next = 24;
+                          return _fields.default.placeReq();
+
+                        case 24:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'requestedFor', 'requester for email field should throw email validation error');
+                          _context34.next = 28;
+                          return _detail.default.reqInfo.clickReqForField();
+
+                        case 28:
+                          _context34.next = 30;
+                          return _detail.default.reqInfo.fillReqForField('reg googl <reqfor@google.com>');
+
+                        case 30:
+                          _context34.next = 32;
+                          return _detail.default.reqInfo.clickBtnAddCC();
+
+                        case 32:
+                          _context34.next = 34;
+                          return _detail.default.reqInfo.fillAddCC('randomdfsdfs.com');
+
+                        case 34:
+                          _context34.next = 36;
+                          return _fields.default.placeReq();
+
+                        case 36:
+                          assert.equal(_fields.default.errorFields.length, 1, 'No of error fields match');
+                          assert.equal(_fields.default.errorFields[0].errorFieldName, 'ccEmails', 'cc emails field should throw email validation error');
+                          _context34.next = 40;
+                          return _detail.default.reqInfo.clearAddCC();
+
+                        case 40:
+                          _context34.next = 42;
+                          return _detail.default.reqInfo.fillAddCC('random <random@dfsdfs.com>');
+
+                        case 42:
+                          _context34.next = 44;
+                          return _fields.default.placeReq();
+
+                        case 44:
+                          assert.equal(_fields.default.errorFields.length, 0, 'No of error fields match');
+                          assert.ok(saveCallbackSpy.calledOnce, 'Service Request Placed');
+
+                        case 46:
+                        case "end":
+                          return _context34.stop();
+                      }
+                    }
+                  }, _callee34, this);
+                }));
+
+                return function (_x35) {
+                  return _ref36.apply(this, arguments);
+                };
               }());
 
-            case 39:
+            case 41:
             case "end":
-              return _context34.stop();
+              return _context36.stop();
           }
         }
-      }, _callee34);
+      }, _callee36);
     }));
 
     return function (_x) {
@@ -32443,6 +33007,65 @@ define("freshservice/tests/integration/components/module-solutions/article-form/
 
       return function (_x7) {
         return _ref9.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('Should save changes to the code from code view', /*#__PURE__*/function () {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(assert) {
+        var successFlash;
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)();
+                successFlash = (0, _spyFlashMessage.default)('success');
+                _context9.next = 4;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <ModuleSolutions::ArticleForm @model={{model}} />
+                */
+                {
+                  id: "BfDaFTED",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-solutions/article-form\",[],[[\"@model\"],[[22,\"model\"]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 4:
+                _context9.next = 6;
+                return _article.default.newForm.fillTitle(MOCK_DATA.newArticle.title);
+
+              case 6:
+                _context9.next = 8;
+                return _formFields.default.selectSingle('categoryId', '0');
+
+              case 8:
+                _context9.next = 10;
+                return _formFields.default.selectSingle('folderId', '0');
+
+              case 10:
+                _context9.next = 12;
+                return _article.default.newForm.codeView.viewCode();
+
+              case 12:
+                _context9.next = 14;
+                return _article.default.newForm.codeView.fillCode(MOCK_DATA.newArticle.code);
+
+              case 14:
+                _context9.next = 16;
+                return _article.default.newForm.save();
+
+              case 16:
+                assert.ok(successFlash.calledOnce);
+
+              case 17:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      return function (_x8) {
+        return _ref10.apply(this, arguments);
       };
     }());
   });
@@ -38858,6 +39481,12 @@ define("freshservice/tests/integration/components/module-tickets/details/compone
               this.server.loadFixtures('agents_groups');
               this.store.pushPayload(_objectSpread({}, _agents_groups.default));
               (0, _stubCurrentUser.stubCurrentUser)({
+                scoped_privileges: {
+                  0: ['manage_tickets', 'edit_ticket_properties', 'reply_ticket', 'forward_ticket', 'view_time_entries'],
+                  1: [],
+                  2: [],
+                  3: []
+                },
                 privileges: ['manage_tickets', 'edit_ticket_properties', 'reply_ticket', 'forward_ticket', 'view_time_entries'],
                 preferences: []
               });
@@ -38880,7 +39509,17 @@ define("freshservice/tests/integration/components/module-tickets/details/compone
 
               _sinon.default.stub(this.marketplaceAdapter, 'publishEvent').returns(null);
 
-            case 18:
+              this.marketplaceEventApi = this.owner.lookup('service:marketplaceEventApi');
+
+              _sinon.default.stub(this.marketplaceEventApi, 'prepareEventData').returns({});
+
+              _sinon.default.stub(this.marketplaceEventApi, 'preparePropertyUpdates').returns({});
+
+              _sinon.default.stub(this.marketplaceEventApi, 'prepareCustomMultiselectMap').returns({});
+
+              _sinon.default.stub(this.marketplaceEventApi, 'prepareDepartmentMap').returns({});
+
+            case 23:
             case "end":
               return _context.stop();
           }
@@ -39440,18 +40079,28 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
     })));
     (0, _qunit.test)('should open forward editor on clicking forward option from change action dropdown in the editor', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
-        var replyModel, forwardModel;
+        var currentUserPrivilege, replyModel, forwardModel;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // Open reply editor
+                currentUserPrivilege = {
+                  scoped_privileges: {
+                    0: ["manage_tickets", "forward_ticket"],
+                    1: [],
+                    2: [],
+                    3: []
+                  },
+                  privileges: ["manage_tickets", "forward_ticket"]
+                };
+                (0, _stubCurrentUser.stubCurrentUser)(currentUserPrivilege); // Open reply editor
+
                 replyModel = this.store.createRecord('conversation', {});
                 this.set('convoCreateSuccessCallback', function () {});
                 this.set('uniqueId', this.model.id);
                 this.set('replyModel', replyModel);
                 this.set('updateReplyDraftData', function () {});
-                _context2.next = 7;
+                _context2.next = 9;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   <ModuleTickets::Details::ConversationActions::Reply 
@@ -39471,19 +40120,19 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
                   meta: {}
                 }));
 
-              case 7:
-                _context2.next = 9;
-                return _conversation.default.editorFields.clickChangeActionsDropdown();
-
               case 9:
                 _context2.next = 11;
-                return _conversation.default.conversationActions.triggerForwardEditor();
+                return _conversation.default.editorFields.clickChangeActionsDropdown();
 
               case 11:
+                _context2.next = 13;
+                return _conversation.default.conversationActions.triggerForwardEditor();
+
+              case 13:
                 forwardModel = this.store.createRecord('conversation', {});
                 this.set('convoCreateSuccessCallback', function () {});
                 this.set('forwardModel', forwardModel);
-                _context2.next = 16;
+                _context2.next = 18;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   <ModuleTickets::Details::ConversationActions::Forward 
@@ -39501,11 +40150,11 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
                   meta: {}
                 }));
 
-              case 16:
+              case 18:
                 assert.ok(_conversation.default.conversationActions.forwardEditorExists, 'forward editor should be shown');
                 assert.notOk(_conversation.default.conversationActions.replyEditorExists, 'Reply editor shouldnt be rendered once forward action is triggered');
 
-              case 18:
+              case 20:
               case "end":
                 return _context2.stop();
             }
@@ -39525,6 +40174,12 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
             switch (_context3.prev = _context3.next) {
               case 0:
                 currentUserPrivilege = {
+                  scoped_privileges: {
+                    0: ["manage_tickets", "reply_ticket"],
+                    1: [],
+                    2: [],
+                    3: []
+                  },
                   privileges: ["manage_tickets", "reply_ticket"]
                 };
                 (0, _stubCurrentUser.stubCurrentUser)(currentUserPrivilege);
@@ -39731,6 +40386,12 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
             switch (_context2.prev = _context2.next) {
               case 0:
                 currentUserPrivilege = {
+                  scoped_privileges: {
+                    0: ['manage_tickets'],
+                    1: [],
+                    2: [],
+                    3: []
+                  },
                   privileges: ['manage_tickets']
                 };
                 (0, _stubCurrentUser.stubCurrentUser)(currentUserPrivilege); // Act
@@ -39782,25 +40443,36 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
     }());
     (0, _qunit.test)('should open reply editor on clicking reply button', /*#__PURE__*/function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
-        var replyModel;
+        var currentUserPrivilege, replyModel;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
+                currentUserPrivilege = {
+                  scoped_privileges: {
+                    0: ['manage_tickets', 'reply_ticket'],
+                    1: [],
+                    2: [],
+                    3: []
+                  },
+                  privileges: ['manage_tickets', 'reply_ticket']
+                };
+                (0, _stubCurrentUser.stubCurrentUser)(currentUserPrivilege); // Act
+
+                _context4.next = 4;
                 return renderConversationActions();
 
-              case 2:
-                _context4.next = 4;
+              case 4:
+                _context4.next = 6;
                 return _conversation.default.conversationActions.openReplyEditor();
 
-              case 4:
+              case 6:
                 replyModel = this.store.createRecord('conversation', {});
                 this.set('convoCreateSuccessCallback', function () {});
                 this.set('uniqueId', this.model.id);
                 this.set('replyModel', replyModel);
                 this.set('updateReplyDraftData', function () {});
-                _context4.next = 11;
+                _context4.next = 13;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   <ModuleTickets::Details::ConversationActions::Reply 
@@ -39820,10 +40492,10 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
                   meta: {}
                 }));
 
-              case 11:
+              case 13:
                 assert.ok(_conversation.default.conversationActions.replyEditorExists);
 
-              case 12:
+              case 14:
               case "end":
                 return _context4.stop();
             }
@@ -39837,24 +40509,35 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
     }());
     (0, _qunit.test)('should open forward editor on clicking forward button', /*#__PURE__*/function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(assert) {
-        var forwardModel;
+        var currentUserPrivilege, forwardModel;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
+                currentUserPrivilege = {
+                  scoped_privileges: {
+                    0: ['manage_tickets', 'forward_ticket'],
+                    1: [],
+                    2: [],
+                    3: []
+                  },
+                  privileges: ['manage_tickets', 'forward_ticket']
+                };
+                (0, _stubCurrentUser.stubCurrentUser)(currentUserPrivilege); // Act
+
+                _context5.next = 4;
                 return renderConversationActions();
 
-              case 2:
-                _context5.next = 4;
+              case 4:
+                _context5.next = 6;
                 return _conversation.default.conversationActions.openForwardEditor();
 
-              case 4:
+              case 6:
                 forwardModel = this.store.createRecord('conversation', {});
                 this.set('convoCreateSuccessCallback', function () {});
                 this.set('forwardModel', forwardModel);
                 this.set('uniqueId', this.model.id);
-                _context5.next = 10;
+                _context5.next = 12;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   <ModuleTickets::Details::ConversationActions::Forward 
@@ -39872,10 +40555,10 @@ define("freshservice/tests/integration/components/module-tickets/details/convers
                   meta: {}
                 }));
 
-              case 10:
+              case 12:
                 assert.ok(_conversation.default.conversationActions.forwardEditorExists);
 
-              case 11:
+              case 13:
               case "end":
                 return _context5.stop();
             }
@@ -42036,10 +42719,11 @@ define("freshservice/tests/integration/components/module-tickets/details/related
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                (0, _stubCurrentUser.stubCurrentUser)(CURRENT_USER);
+                _context3.next = 3;
                 return this.store.findRecord('ticket', 341);
 
-              case 2:
+              case 3:
                 mockTicket = _context3.sent;
                 this.model = mockTicket;
                 this.additionalOps = {
@@ -42047,7 +42731,7 @@ define("freshservice/tests/integration/components/module-tickets/details/related
                   closedEntity: false,
                   resolvedEntity: false
                 };
-                _context3.next = 7;
+                _context3.next = 8;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   <ModuleTickets::Details::RelatedTickets
@@ -42061,7 +42745,7 @@ define("freshservice/tests/integration/components/module-tickets/details/related
                   meta: {}
                 }));
 
-              case 7:
+              case 8:
                 assert.ok(_relatedTickets.default.relatedTicketsExist);
                 assert.notOk(_relatedTickets.default.eobTicketsExist);
                 assert.ok(_relatedTickets.default.ticketExist);
@@ -42074,7 +42758,7 @@ define("freshservice/tests/integration/components/module-tickets/details/related
                 assert.ok(_relatedTickets.default.ticketPriotityName);
                 assert.equal(_relatedTickets.default.ticketDisplayId, "#".concat(_parentTicket.default.parent_ticket.human_display_id), 'display id should begin with #');
 
-              case 18:
+              case 19:
               case "end":
                 return _context3.stop();
             }
@@ -42699,9 +43383,17 @@ define("freshservice/tests/integration/components/module-tickets/details/related
                     dueBy: childTicket.due_by,
                     requester: childTicket.requester,
                     status: childTicket.status,
+                    statusName: childTicket.status_name,
                     priority: childTicket.priority,
                     state: childTicket.state,
-                    createdAt: childTicket.created_at
+                    createdAt: childTicket.created_at,
+                    stats: {
+                      "status_updated_at": childTicket.stats.updated_at,
+                      "resolved_at": childTicket.stats.resolved_at,
+                      "closed_at": childTicket.stats.closed_at,
+                      "updated_at": childTicket.stats.updated_at,
+                      "pending_since": null
+                    }
                   };
                 });
               });
@@ -43786,7 +44478,7 @@ define("freshservice/tests/integration/components/module-tickets/details/stage-d
 
               case 9:
                 assert.ok(successFlash.calledOnce);
-                assert.equal(_requestedItem.default.reqItemStageText, 'REQUESTED');
+                assert.equal(_requestedItem.default.reqItemStageText, 'Requested');
 
               case 11:
               case "end":
@@ -43831,7 +44523,7 @@ define("freshservice/tests/integration/components/module-tickets/details/stage-d
 
               case 13:
                 assert.ok(successFlash.calledOnce);
-                assert.equal(_requestedItem.default.reqItemStageText, 'CANCELLED');
+                assert.equal(_requestedItem.default.reqItemStageText, 'Cancelled');
 
               case 15:
               case "end":
@@ -43922,6 +44614,12 @@ define("freshservice/tests/integration/components/module-tickets/details/summary
 
   var TEST_USER = {
     language: "en",
+    scoped_privileges: {
+      0: ["edit_ticket_properties", "csat_response_view"],
+      1: [],
+      2: [],
+      3: []
+    },
     privileges: ["edit_ticket_properties", "csat_response_view"]
   };
 
@@ -44903,7 +45601,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tabs/as
     }());
   });
 });
-define("freshservice/tests/integration/components/module-tickets/details/tasks/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl", "ember-cli-mirage/test-support", "freshservice/constants/common/tasks"], function (_qunit, _emberQunit, _testHelpers, _intl, _testSupport, _tasks) {
+define("freshservice/tests/integration/components/module-tickets/details/tasks/component-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl", "ember-cli-mirage/test-support", "freshservice/constants/common/tasks", "freshservice/tests/lib/stub-current-user"], function (_qunit, _emberQunit, _testHelpers, _intl, _testSupport, _tasks, _stubCurrentUser) {
   "use strict";
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -44911,6 +45609,15 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/c
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
   var COMPLETED_STATUS = "Completed";
+  var TEST_USER = {
+    scoped_privileges: {
+      0: ["manage_ticket_tasks"],
+      1: [],
+      2: [],
+      3: []
+    },
+    privileges: ["manage_ticket_tasks"]
+  };
   (0, _qunit.module)('Integration | Component | module-tickets/details/tasks', function (hooks) {
     (0, _emberQunit.setupRenderingTest)(hooks);
     (0, _testSupport.setupMirage)(hooks);
@@ -45052,7 +45759,8 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/c
                 this.additionalOps = {
                   closedEntity: false
                 };
-                _context4.next = 3;
+                (0, _stubCurrentUser.stubCurrentUser)(TEST_USER);
+                _context4.next = 4;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
@@ -45067,49 +45775,49 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/c
                   meta: {}
                 }));
 
-              case 3:
+              case 4:
                 taskItem = this.element.querySelector('[data-test-task-item]');
                 taskItemDisplayID = taskItem.querySelector('[data-test-task-item-displayid]').innerText;
                 taskItemCheckBox = taskItem.querySelector('[data-test-id="complete-task"]');
-                _context4.next = 8;
+                _context4.next = 9;
                 return (0, _testHelpers.click)(taskItemCheckBox);
 
-              case 8:
+              case 9:
                 newTaskItem = this.element.querySelector('[data-test-task-item]');
                 newTaskItemDisplayID = newTaskItem.querySelector('[data-test-task-item-displayid]').innerText;
                 assert.notEqual(newTaskItemDisplayID, taskItemDisplayID, "Task ".concat(taskItemDisplayID, " after marked as complete is removed from My open & In Progress filter"));
-                _context4.next = 13;
+                _context4.next = 14;
                 return (0, _testHelpers.click)(this.element.querySelector('[data-test-task-filter-trigger]'));
 
-              case 13:
-                _context4.next = 15;
+              case 14:
+                _context4.next = 16;
                 return (0, _testHelpers.click)(this.element.querySelector('[data-test-id="task-filter-CLOSED_FILTER_STATUS"]'));
 
-              case 15:
+              case 16:
                 closedTaskItem = this.element.querySelector('[data-test-task-item]');
                 closedTaskItemDisplayID = closedTaskItem.querySelector('[data-test-task-item-displayid]').innerText;
                 closedTaskItemCheckBox = closedTaskItem.querySelector('[data-test-id="reopen-task"]');
                 assert.equal(taskItemDisplayID, closedTaskItemDisplayID, "Task ".concat(taskItemDisplayID, " after marked complete is inside Completed task filter"));
-                _context4.next = 21;
+                _context4.next = 22;
                 return (0, _testHelpers.click)(closedTaskItemCheckBox);
 
-              case 21:
+              case 22:
                 newClosedTaskItem = this.element.querySelector('[data-test-task-item]');
                 newClosedTaskItemDisplayID = newClosedTaskItem.querySelector('[data-test-task-item-displayid]').innerText;
                 assert.notEqual(newClosedTaskItemDisplayID, closedTaskItemDisplayID, "Task ".concat(closedTaskItemDisplayID, " after re-opened is removed from Completed filter"));
-                _context4.next = 26;
+                _context4.next = 27;
                 return (0, _testHelpers.click)(this.element.querySelector('[data-test-task-filter-trigger]'));
 
-              case 26:
-                _context4.next = 28;
+              case 27:
+                _context4.next = 29;
                 return (0, _testHelpers.click)(this.element.querySelector('[data-test-id="task-filter-DEFAULT_FILTER_STATUS"]'));
 
-              case 28:
+              case 29:
                 reOpenedTaskItem = this.element.querySelector('[data-test-task-item]');
                 reOpenedTaskItemDisplayID = reOpenedTaskItem.querySelector('[data-test-task-item-displayid]').innerText;
                 assert.equal(closedTaskItemDisplayID, reOpenedTaskItemDisplayID, "Task ".concat(taskItemDisplayID, " after reopened is inside My open & In Progress task filter"));
 
-              case 31:
+              case 32:
               case "end":
                 return _context4.stop();
             }
@@ -45136,7 +45844,8 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/c
                 this.additionalOps = {
                   closedEntity: false
                 };
-                _context5.next = 5;
+                (0, _stubCurrentUser.stubCurrentUser)(TEST_USER);
+                _context5.next = 6;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
                   	<ModuleTickets::Details::Tasks 
@@ -45152,25 +45861,25 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/c
                   meta: {}
                 }));
 
-              case 5:
+              case 6:
                 listItemDisplayID = this.element.querySelector('[data-test-task-item-displayid]').innerText;
                 listItemMoreBtn = this.element.querySelector('[data-test-task-item-more-trigger]');
-                _context5.next = 9;
+                _context5.next = 10;
                 return (0, _testHelpers.click)(listItemMoreBtn);
 
-              case 9:
-                _context5.next = 11;
+              case 10:
+                _context5.next = 12;
                 return (0, _testHelpers.click)('[data-test-task-item-more] [data-test-task-item-more-delete]');
 
-              case 11:
-                _context5.next = 13;
+              case 12:
+                _context5.next = 14;
                 return (0, _testHelpers.click)('[data-test-id="modal-submit"]');
 
-              case 13:
+              case 14:
                 newListItemDispID = this.element.querySelector('[data-test-task-item-displayid]').innerText;
                 assert.notEqual(listItemDisplayID, newListItemDispID, "Task ".concat(listItemDisplayID, " has been deleted and is not present in current filter anymore"));
 
-              case 15:
+              case 16:
               case "end":
                 return _context5.stop();
             }
@@ -45235,10 +45944,13 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/f
               this.set('intl', this.owner.lookup("service:intl"));
               this.set('agentsGroups', this.owner.lookup("service:agentsGroups"));
               (0, _stubCurrentUser.stubCurrentUser)({
-                privileges: ["manage_ticket_tasks"],
-                hasAbilities: function hasAbilities() {
-                  return true;
-                }
+                scoped_privileges: {
+                  0: ["manage_ticket_tasks"],
+                  1: [],
+                  2: [],
+                  3: []
+                },
+                privileges: ["manage_ticket_tasks"]
               });
               this.set('module', "tickets");
               this.set('modalTask', null);
@@ -45613,7 +46325,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/f
               case 13:
                 assert.ok(successFlash.calledOnce);
                 taskItems = document.querySelectorAll('.task-list .task-item');
-                lastCreatedTaskItem = taskItems[taskItems.length - 1];
+                lastCreatedTaskItem = taskItems[0];
                 _context7.next = 18;
                 return (0, _testHelpers.click)(lastCreatedTaskItem.querySelector('[data-test-task-item-more-trigger]'));
 
@@ -45645,6 +46357,15 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
 
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+  var TEST_USER = {
+    scoped_privileges: {
+      0: ["manage_ticket_tasks"],
+      1: [],
+      2: [],
+      3: []
+    },
+    privileges: ["manage_ticket_tasks"]
+  };
   (0, _qunit.module)('Integration | Component | module-tickets/details/tasks/modal', function (hooks) {
     (0, _emberQunit.setupRenderingTest)(hooks);
     (0, _testSupport.setupMirage)(hooks);
@@ -45669,12 +46390,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
             case 8:
               this.set('model', model.lastObject);
               this.set('intl', this.owner.lookup("service:intl"));
-              (0, _stubCurrentUser.stubCurrentUser)({
-                privileges: ["manage_ticket_tasks"],
-                hasAbilities: function hasAbilities() {
-                  return true;
-                }
-              });
+              (0, _stubCurrentUser.stubCurrentUser)(TEST_USER);
 
             case 11:
             case "end":
@@ -45806,9 +46522,7 @@ define("freshservice/tests/integration/components/module-tickets/details/tasks/m
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                (0, _stubCurrentUser.stubCurrentUser)({
-                  privileges: ["manage_ticket_tasks"]
-                });
+                (0, _stubCurrentUser.stubCurrentUser)(TEST_USER);
                 this.set('module', "tickets");
                 this.additionalOps = {
                   closedEntity: false
@@ -49506,7 +50220,7 @@ define("freshservice/tests/integration/components/module-workloads/manage-assign
 
               case 2:
                 ele = this.element.querySelector('[data-test-id="wlm-mas-overview-hint"]');
-                assert.equal(ele.textContent.trim(), 'Manage open and unresolved work');
+                assert.equal(ele.textContent.trim(), 'Manage open and in progress work');
 
               case 4:
               case "end":
@@ -49527,22 +50241,25 @@ define("freshservice/tests/integration/components/module-workloads/manage-assign
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                this.set('selectedUser', {
+                  name: 'sam'
+                });
+                _context3.next = 3;
                 return (0, _testHelpers.render)(Ember.HTMLBars.template(
                 /*
-                  <ModuleWorkloads::ManageAssignmentSlider::AssignmentOverview @userId="12"/>
+                  <ModuleWorkloads::ManageAssignmentSlider::AssignmentOverview @selectedUser={{this.selectedUser}} @userId="12"/>
                 */
                 {
-                  id: "i7mzhukc",
-                  block: "{\"symbols\":[],\"statements\":[[5,\"module-workloads/manage-assignment-slider/assignment-overview\",[],[[\"@userId\"],[\"12\"]]]],\"hasEval\":false}",
+                  id: "mM5tSZnd",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"module-workloads/manage-assignment-slider/assignment-overview\",[],[[\"@selectedUser\",\"@userId\"],[[23,0,[\"selectedUser\"]],\"12\"]]]],\"hasEval\":false}",
                   meta: {}
                 }));
 
-              case 2:
+              case 3:
                 ele = this.element.querySelector('[data-test-id="wlm-mas-overview-who"]');
                 assert.equal(ele.textContent.trim(), "sam's work");
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -50303,7 +51020,7 @@ define("freshservice/tests/integration/components/module-workloads/manage-assign
 
               case 3:
                 messageDom = this.element.querySelector('[data-test-id="wlm-mas-empty-state-message"]');
-                assert.equal(messageDom.textContent.trim(), 'There is no open and unresolved work to display');
+                assert.equal(messageDom.textContent.trim(), 'There is no open or in progress work to display');
 
               case 5:
               case "end":
@@ -56809,6 +57526,1646 @@ define("freshservice/tests/integration/components/module-workloads/unassigned-it
     }());
   });
 });
+define("freshservice/tests/integration/components/portal-designer/custom-translations/component-test", ["qunit", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "@ember/test-helpers"], function (_qunit, _emberQunit, _testSupport, _intl, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var PRIMARY_TRANSLATION = "<p>Hi, how can we help you ?</p>";
+  var LANG_PATH = "portal.home_title";
+  var SUPPORTED_LANGUAGES = [{
+    "id": "da",
+    "value": "Danish",
+    "primary": false
+  }, {
+    "id": "fr",
+    "value": "French",
+    "primary": false
+  }, {
+    "id": "es",
+    "value": "Spanish",
+    "primary": false
+  }];
+  var CUSTOM_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    },
+    "da": {
+      "portal": {
+        "home_title": "Hi in Danish"
+      }
+    }
+  };
+
+  var UPDATE_SECONDARY_TRANSLATIONS_COUNT = function UPDATE_SECONDARY_TRANSLATIONS_COUNT() {//do nothing
+  };
+
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  var BUILDER_SERVICE_STUB = Ember.Service.extend({
+    translations: MOCK_TRANSLATIONS,
+    sendToPortal: function sendToPortal() {//do nothing
+    },
+    postDraft: function postDraft() {//do nothing
+    }
+  }); // Wait method implemented to account for the froala toggle delay
+
+  function wait() {
+    return _wait.apply(this, arguments);
+  }
+
+  function _wait() {
+    _wait = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+      var timeout,
+          _args6 = arguments;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              timeout = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : 500;
+              return _context6.abrupt("return", new Promise(function (resolve) {
+                setTimeout(resolve, timeout);
+              }));
+
+            case 2:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+    return _wait.apply(this, arguments);
+  }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/custom-translations', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach(function () {
+      var _this = this;
+
+      this.server.loadFixtures('languages');
+      this.owner.lookup('service:store');
+      this.owner.register('service:portal-builder', BUILDER_SERVICE_STUB);
+      var translationService = this.owner.lookup('service:portal-designer-translations');
+      translationService.set('primaryLanguage', {
+        id: 'en',
+        value: 'English'
+      });
+      translationService.initTextTranslations(LANG_PATH);
+      this.set('portalDesignerTranslations', translationService);
+      this.set('portalDesignerTranslations.supportedLanguages', SUPPORTED_LANGUAGES);
+      this.set('portalDesignerTranslations.customTranslations', CUSTOM_TRANSLATIONS);
+      this.set('isModalOpen', true);
+      this.set('toggleModal', function () {
+        _this.set('isModalOpen', !_this.isModalOpen);
+      });
+      this.set('primaryTranslation', PRIMARY_TRANSLATION);
+      this.set('updateSecondaryTranslationsCount', UPDATE_SECONDARY_TRANSLATIONS_COUNT);
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations
+                      @isModalOpen        							= {{this.isModalOpen}}
+                      @toggleModal        							= {{this.toggleModal}}
+                      @primaryTranslation 							= {{this.primaryTranslation}}
+                			@updateSecondaryTranslationsCount = {{this.updateSecondaryTranslationsCount}}
+                    />
+                */
+                {
+                  id: "5BcaORY+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations\",[],[[\"@isModalOpen\",\"@toggleModal\",\"@primaryTranslation\",\"@updateSecondaryTranslationsCount\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]],[23,0,[\"primaryTranslation\"]],[23,0,[\"updateSecondaryTranslationsCount\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.ok(true);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it displays existing translations', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations
+                      @isModalOpen        							= {{this.isModalOpen}}
+                      @toggleModal        							= {{this.toggleModal}}
+                      @primaryTranslation 							= {{this.primaryTranslation}}
+                			@updateSecondaryTranslationsCount = {{this.updateSecondaryTranslationsCount}}
+                    />
+                */
+                {
+                  id: "5BcaORY+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations\",[],[[\"@isModalOpen\",\"@toggleModal\",\"@primaryTranslation\",\"@updateSecondaryTranslationsCount\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]],[23,0,[\"primaryTranslation\"]],[23,0,[\"updateSecondaryTranslationsCount\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.equal(this.element.querySelector('[data-test-id="translated-text"]').innerText, 'Hi in Danish', 'displays existing translation');
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it deletes existing translation', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations
+                      @isModalOpen        							= {{this.isModalOpen}}
+                      @toggleModal        							= {{this.toggleModal}}
+                      @primaryTranslation 							= {{this.primaryTranslation}}
+                			@updateSecondaryTranslationsCount = {{this.updateSecondaryTranslationsCount}}
+                    />
+                */
+                {
+                  id: "5BcaORY+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations\",[],[[\"@isModalOpen\",\"@toggleModal\",\"@primaryTranslation\",\"@updateSecondaryTranslationsCount\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]],[23,0,[\"primaryTranslation\"]],[23,0,[\"updateSecondaryTranslationsCount\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.equal(this.element.querySelector('[data-test-id="translated-text"]').innerText, 'Hi in Danish', 'displays existing translation');
+                _context3.next = 5;
+                return (0, _testHelpers.click)('[data-test-id="delete-card"]');
+
+              case 5:
+                assert.notOk(this.element.querySelector('[data-test-id="translated-text"]'), 'deleted existing translation');
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it closes modal', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations
+                      @isModalOpen        							= {{this.isModalOpen}}
+                      @toggleModal        							= {{this.toggleModal}}
+                      @primaryTranslation 							= {{this.primaryTranslation}}
+                			@updateSecondaryTranslationsCount = {{this.updateSecondaryTranslationsCount}}
+                    />
+                */
+                {
+                  id: "5BcaORY+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations\",[],[[\"@isModalOpen\",\"@toggleModal\",\"@primaryTranslation\",\"@updateSecondaryTranslationsCount\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]],[23,0,[\"primaryTranslation\"]],[23,0,[\"updateSecondaryTranslationsCount\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                _context4.next = 4;
+                return (0, _testHelpers.click)('[data-test-id="modal-cancel"]');
+
+              case 4:
+                assert.notOk(this.element.querySelector('[data-test-id="translation-modal"]'), 'modal closed on cancel');
+                this.toggleModal();
+                assert.ok(this.element.querySelector('[data-test-id="translation-modal"]'), 'modal opened');
+                _context4.next = 9;
+                return (0, _testHelpers.click)('[data-test-id="ember-modal-close"]');
+
+              case 9:
+                assert.notOk(this.element.querySelector('[data-test-id="translation-modal"]'), 'modal closed on close icon click');
+                this.toggleModal();
+                assert.ok(this.element.querySelector('[data-test-id="translation-modal"]'), 'modal opened');
+                _context4.next = 14;
+                return (0, _testHelpers.click)('[data-test-id="modal-submit"]');
+
+              case 14:
+                assert.notOk(this.element.querySelector('[data-test-id="translation-modal"]'), 'modal closed on save');
+
+              case 15:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x4) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it adds and saves new translation', /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(assert) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                this.set('portalDesignerTranslations.placeholderModalStatus', function () {
+                  return false;
+                });
+                this.set('portalDesignerTranslations.customTranslations.da', '');
+                _context5.next = 4;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations
+                      @isModalOpen        							= {{this.isModalOpen}}
+                      @toggleModal        							= {{this.toggleModal}}
+                      @primaryTranslation 							= {{this.primaryTranslation}}
+                			@updateSecondaryTranslationsCount = {{this.updateSecondaryTranslationsCount}}
+                    />
+                */
+                {
+                  id: "5BcaORY+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations\",[],[[\"@isModalOpen\",\"@toggleModal\",\"@primaryTranslation\",\"@updateSecondaryTranslationsCount\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]],[23,0,[\"primaryTranslation\"]],[23,0,[\"updateSecondaryTranslationsCount\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 4:
+                _context5.next = 6;
+                return (0, _testHelpers.click)('.ember-power-select-trigger');
+
+              case 6:
+                _context5.next = 8;
+                return (0, _testHelpers.click)('[data-option-index="0"]');
+
+              case 8:
+                _context5.next = 10;
+                return (0, _testHelpers.click)('[data-test-id="translated-text"]');
+
+              case 10:
+                _context5.next = 12;
+                return wait();
+
+              case 12:
+                _context5.next = 14;
+                return (0, _testHelpers.fillIn)('.fr-translation-editor .fr-element.fr-view', 'Hi in Danish');
+
+              case 14:
+                _context5.next = 16;
+                return (0, _testHelpers.click)('[data-test-id="translation-modal"]');
+
+              case 16:
+                //?clicking outside
+                assert.ok(this.element.querySelector('[data-test-id="translated-text"]'), 'new translation card added');
+                _context5.next = 19;
+                return (0, _testHelpers.click)('[data-test-id="modal-submit"]');
+
+              case 19:
+                assert.equal(this.get('portalDesignerTranslations.customTranslations.da.portal.home_title'), 'Hi in Danish', 'new translation saved');
+
+              case 20:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      return function (_x5) {
+        return _ref6.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/custom-translations/language-card/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  var BUILDER_SERVICE_STUB = Ember.Service.extend({
+    translations: MOCK_TRANSLATIONS,
+    sendToPortal: function sendToPortal() {//do nothing
+    }
+  });
+  (0, _qunit.module)('Integration | Component | portal-designer/custom-translations/language-card', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    hooks.beforeEach(function () {
+      this.owner.register('service:portal-builder', BUILDER_SERVICE_STUB);
+      var translationService = this.owner.lookup('service:portal-designer-translations');
+      translationService.set('placeholderModalStatus', function () {
+        return false;
+      });
+      translationService.set('primaryLanguage', {
+        code: 'en',
+        name: 'English'
+      });
+      this.set('portalDesignerTranslations', translationService);
+      this.set('cardLabel', 'Title');
+      this.set('onUpdate', function () {//do nothing
+      });
+      this.set('onDelete', function () {//do nothing
+      });
+      this.set('langCode', 'fr');
+      this.set('langName', 'French');
+      this.set('translations', 'Comment pouvons-nous vous aider ?');
+    });
+    (0, _qunit.test)('it renders primary translation card', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.set('langCode', 'en');
+                this.set('langName', 'English');
+                this.set('translations', 'How can we help you ?');
+                this.set('isPrimaryLang', true);
+                _context.next = 6;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations::LanguageCard 
+                      @langCode       = {{this.langCode}}
+                      @langName       = {{this.langName}}
+                      @translation    = {{this.translation}}
+                      @isPrimaryLang  = {{this.isPrimaryLang}}
+                      @label          = {{this.cardLabel}}
+                      @onUpdate       = {{this.onUpdate}}
+                    />
+                */
+                {
+                  id: "RlPhLjEv",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations/language-card\",[],[[\"@langCode\",\"@langName\",\"@translation\",\"@isPrimaryLang\",\"@label\",\"@onUpdate\"],[[23,0,[\"langCode\"]],[23,0,[\"langName\"]],[23,0,[\"translation\"]],[23,0,[\"isPrimaryLang\"]],[23,0,[\"cardLabel\"]],[23,0,[\"onUpdate\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 6:
+                assert.notOk(this.element.querySelector('[data-test-id="delete-card"]'), 'no delete option');
+                assert.notOk(this.element.querySelector('[data-test-id="translated-text"]'), 'no edit option');
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it renders supported language translation card', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::CustomTranslations::LanguageCard 
+                      @langCode    = {{this.langCode}}
+                      @langName    = {{this.langName}}
+                      @translation = {{this.translation}}
+                      @label       = {{this.cardLabel}}
+                      @onUpdate    = {{this.onUpdate}}
+                      @onDelete    = {{this.onDelete}}
+                    />
+                */
+                {
+                  id: "7KSB8lhs",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/custom-translations/language-card\",[],[[\"@langCode\",\"@langName\",\"@translation\",\"@label\",\"@onUpdate\",\"@onDelete\"],[[23,0,[\"langCode\"]],[23,0,[\"langName\"]],[23,0,[\"translation\"]],[23,0,[\"cardLabel\"]],[23,0,[\"onUpdate\"]],[23,0,[\"onDelete\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.ok(this.element.querySelector('[data-test-id="delete-card"]'), 'delete option');
+                assert.ok(this.element.querySelector('[data-test-id="translated-text"]'), 'edit option');
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/manage-versions-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl"], function (_qunit, _emberQunit, _testHelpers, _intl) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/manage-versions', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    hooks.after(function () {
+      this.owner.destroy("service:intl");
+    });
+    (0, _qunit.test)('it renders manage versions dropdown button', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::ManageVersions />
+                */
+                {
+                  id: "LRT4scq4",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/manage-versions\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('.ember-basic-dropdown').exists();
+                assert.equal(this.element.querySelector('.ember-basic-dropdown .manage-versions-title').innerText.trim(), this.intl.t("portal_designer.manage_versions"));
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/page-switcher-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl", "freshservice/tests/lib/stub-current-account", "freshservice/tests/data/custom-translations"], function (_qunit, _emberQunit, _testHelpers, _intl, _stubCurrentAccount, _customTranslations) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/page-switcher', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    hooks.after(function () {
+      this.owner.destroy("service:intl");
+    });
+    (0, _qunit.test)('it renders Page Switcher element', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::PageSwitcher />
+                */
+                {
+                  id: "s5txKoz4",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/page-switcher\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('.page-switcher.ember-basic-dropdown').exists();
+                assert.dom('.page-switcher .selected-page').exists();
+                assert.equal(document.querySelector('.page-switcher .selected-page').innerText.trim(), this.intl.t("portal_designer.home_page_designer"));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it clicks Page Switcher element ', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::PageSwitcher />
+                */
+                {
+                  id: "s5txKoz4",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/page-switcher\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                _context3.next = 4;
+                return (0, _testHelpers.click)('.selected-page');
+
+              case 4:
+                assert.dom('#search-pages').exists();
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it fills in search page text box', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        var expected_output;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                (0, _stubCurrentAccount.stubCurrentAccount)({
+                  customTranslations: _customTranslations.defaultCustomTranslations
+                });
+                expected_output = [this.intl.t('portal_designer.solutions_home'), this.intl.t('portal_designer.solution_category')];
+                _context4.next = 4;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::PageSwitcher />
+                */
+                {
+                  id: "s5txKoz4",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/page-switcher\",[],[[],[]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 4:
+                _context4.next = 6;
+                return (0, _testHelpers.click)('.selected-page');
+
+              case 6:
+                _context4.next = 8;
+                return (0, _testHelpers.fillIn)('input#search-pages', 'solution');
+
+              case 8:
+                assert.equal(this.element.querySelector('.portal-pages .portal-pages-label').innerText.trim(), this.intl.t("portal_designer.solutions"), 'Section headings are as expected');
+                assert.dom('#search-pages').exists();
+                this.element.querySelectorAll('.portal-pages button').forEach(function (current_element) {
+                  assert.equal(expected_output.includes(current_element.innerText.trim()), true, 'Listed items are as expected');
+                });
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/placeholder-modal/component-test", ["qunit", "ember-qunit", "freshservice/tests/lib/intl", "@ember/test-helpers"], function (_qunit, _emberQunit, _intl, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  var BUILDER_SERVICE_STUB = Ember.Service.extend({
+    translations: MOCK_TRANSLATIONS,
+    sendToPortal: function sendToPortal() {//do nothing
+    }
+  });
+  (0, _qunit.module)('Integration | Component | portal-designer/placeholder-modal', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach(function () {
+      var _this = this;
+
+      this.owner.register('service:portal-builder', BUILDER_SERVICE_STUB);
+      var translationService = this.owner.lookup('service:portal-designer-translations');
+      this.set('portalDesignerTranslations', translationService);
+      this.set('isModalOpen', true);
+      this.set('toggleModal', function () {
+        _this.set('isModalOpen', !_this.isModalOpen);
+      });
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::PlaceholderModal 
+                      @isModalOpen = {{this.isModalOpen}}
+                      @toggleModal = {{this.toggleModal}}
+                    />
+                */
+                {
+                  id: "1eCQKe3P",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/placeholder-modal\",[],[[\"@isModalOpen\",\"@toggleModal\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.ok(this.element.querySelector('[data-test-placeholders="container"]'), 'it renders modal');
+                assert.equal(this.element.querySelectorAll('[data-test-placeholders="notAvailable"]').length, 2, 'no placeholders available');
+                assert.ok(true);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it closes modal on close icon click', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::PlaceholderModal 
+                      @isModalOpen = {{this.isModalOpen}}
+                      @toggleModal = {{this.toggleModal}}
+                    />
+                */
+                {
+                  id: "1eCQKe3P",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/placeholder-modal\",[],[[\"@isModalOpen\",\"@toggleModal\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                _context2.next = 4;
+                return (0, _testHelpers.click)('[data-test-placeholders="close"]');
+
+              case 4:
+                assert.notOk(this.element.querySelector('[data-test-placeholders="container"]'), 'modal closed');
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it shows placeholders', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.set('portalDesignerTranslations.placeholderForPortal', true);
+                _context3.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::PlaceholderModal 
+                      @isModalOpen = {{this.isModalOpen}}
+                      @toggleModal = {{this.toggleModal}}
+                    />
+                */
+                {
+                  id: "1eCQKe3P",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/placeholder-modal\",[],[[\"@isModalOpen\",\"@toggleModal\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.ok(this.element.querySelector('[data-test-placeholders="placeholder"]'), 'placeholders rendered');
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it closes modal on placeholders click', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.set('portalDesignerTranslations.placeholderForPortal', true);
+                _context4.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::PlaceholderModal 
+                      @isModalOpen = {{this.isModalOpen}}
+                      @toggleModal = {{this.toggleModal}}
+                    />
+                */
+                {
+                  id: "1eCQKe3P",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/placeholder-modal\",[],[[\"@isModalOpen\",\"@toggleModal\"],[[23,0,[\"isModalOpen\"]],[23,0,[\"toggleModal\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                _context4.next = 5;
+                return (0, _testHelpers.click)('[data-test-placeholders="placeholder"]');
+
+              case 5:
+                assert.notOk(this.element.querySelector('[data-test-placeholders="container"]'), 'modal closed');
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x4) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/section/section-settings/background-color/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/section/section-settings/background-color', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _qunit.test)('should render the color text', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundColor
+                        @value="rgb(180, 75, 75)"
+                      />
+                    
+                */
+                {
+                  id: "YfVCbYka",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-color\",[],[[\"@value\"],[\"rgb(180, 75, 75)\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="color-value"]').hasText('#b44b4b');
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/section/section-settings/background-image/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/section/section-settings/background-image', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _qunit.test)('should set thumbnail based on image', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage
+                        @background='none, url("/assets/portal_v2/hero-left.svg") left bottom no-repeat, url("/assets/portal_v2/hero-right.svg") right bottom no-repeat, linear-gradient(356.12deg, rgb(87, 86, 209) 0%, rgb(57, 36, 167) 100%)'
+                      />
+                    
+                */
+                {
+                  id: "zffnPxDn",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image\",[],[[\"@background\"],[\"none, url(\\\"/assets/portal_v2/hero-left.svg\\\") left bottom no-repeat, url(\\\"/assets/portal_v2/hero-right.svg\\\") right bottom no-repeat, linear-gradient(356.12deg, rgb(87, 86, 209) 0%, rgb(57, 36, 167) 100%)\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="image-swatch"]').hasAttribute('style', 'background-image: url("/a/assets/images/portal-designer/banner-thumbnails/default.png")');
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should hide controls if the image is default', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage
+                        @background='none, url("/assets/portal_v2/hero-left.svg") left bottom no-repeat, url("/assets/portal_v2/hero-right.svg") right bottom no-repeat, linear-gradient(356.12deg, rgb(87, 86, 209) 0%, rgb(57, 36, 167) 100%)'
+                      />
+                    
+                */
+                {
+                  id: "zffnPxDn",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image\",[],[[\"@background\"],[\"none, url(\\\"/assets/portal_v2/hero-left.svg\\\") left bottom no-repeat, url(\\\"/assets/portal_v2/hero-right.svg\\\") right bottom no-repeat, linear-gradient(356.12deg, rgb(87, 86, 209) 0%, rgb(57, 36, 167) 100%)\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="image-size-position-controls"]').doesNotExist();
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should hide controls if the image is initial', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage
+                        @background='initial'
+                      />
+                    
+                */
+                {
+                  id: "3pcaBEnM",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image\",[],[[\"@background\"],[\"initial\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="image-size-position-controls"]').doesNotExist();
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/section/section-settings/background-image/controls/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/section/section-settings/background-image/controls', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _qunit.test)('should check fit to section radio if the size is fit', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                			<PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage::Controls 
+                				@backgroundSize="cover"
+                				@backgroundPosition="initial"
+                			/>
+                		
+                */
+                {
+                  id: "TUTy2cR+",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n\\t\\t\\t\"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image/controls\",[],[[\"@backgroundSize\",\"@backgroundPosition\"],[\"cover\",\"initial\"]]],[0,\"\\n\\t\\t\"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="radio-fit"]').isChecked();
+                assert.dom('[data-test-id="custom-size-controls"]').doesNotExist();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should update controls based on size and position', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                			<PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage::Controls 
+                				@backgroundSize="90%"
+                				@backgroundPosition="20% 30%"
+                			/>
+                		
+                */
+                {
+                  id: "fE2IZFJ6",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n\\t\\t\\t\"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image/controls\",[],[[\"@backgroundSize\",\"@backgroundPosition\"],[\"90%\",\"20% 30%\"]]],[0,\"\\n\\t\\t\"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('#radio-custom').isChecked();
+                assert.dom('[data-test-id="custom-size-controls"]').exists();
+                assert.dom('[data-test-id="size-input"]').hasValue('90');
+                assert.dom('[data-test-id="position-x-input"]').hasValue('20');
+                assert.dom('[data-test-id="position-y-input"]').hasValue('30');
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/section/section-settings/background-image/list/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/section/section-settings/background-image/list', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _qunit.test)('should select rendered image', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage::List 
+                        @isVisible={{true}}
+                        @backgroundImage='url("/a/assets/images/portal-designer/portal-banners/celebration.png")'
+                      />
+                    
+                */
+                {
+                  id: "fVRwPoZ9",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image/list\",[],[[\"@isVisible\",\"@backgroundImage\"],[true,\"url(\\\"/a/assets/images/portal-designer/portal-banners/celebration.png\\\")\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="image-radio"][value="celebration"]').isChecked();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should select none if the image is initial', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <PortalDesigner::Sidebar::Edit::Section::SectionSettings::BackgroundImage::List 
+                        @isVisible={{true}}
+                        @backgroundImage='initial'
+                      />
+                    
+                */
+                {
+                  id: "U6pqI611",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"portal-designer/sidebar/edit/section/section-settings/background-image/list\",[],[[\"@isVisible\",\"@backgroundImage\"],[true,\"initial\"]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="no-image-radio"]').isChecked();
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/text/component-test", ["qunit", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "@ember/test-helpers"], function (_qunit, _emberQunit, _testSupport, _intl, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var PRIMARY_TRANSLATION = "<p>Hi, how can.&nbsp; we help you?</p>";
+  var LANG_PATH = "portal.home_title";
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  var BUILDER_SERVICE_STUB = Ember.Service.extend({
+    translations: MOCK_TRANSLATIONS
+  });
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/text', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach(function () {
+      this.server.loadFixtures('languages');
+      this.owner.register('service:portal-builder', BUILDER_SERVICE_STUB);
+      var translationService = this.owner.lookup('service:portal-designer-translations');
+      translationService.initTextTranslations(LANG_PATH);
+      var store = this.owner.lookup('service:store');
+      Ember.set(this, 'portalDesignerTranslations', translationService);
+      Ember.set(this, 'store', store);
+      Ember.set(this, 'primaryTranslation', PRIMARY_TRANSLATION);
+    });
+    (0, _qunit.test)('it renders text-settings', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::Sidebar::Edit::Text
+                      @primaryTranslation = {{this.primaryTranslation}}
+                    />
+                */
+                {
+                  id: "MqlTlBOj",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/sidebar/edit/text\",[],[[\"@primaryTranslation\"],[[23,0,[\"primaryTranslation\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.ok(true);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('it fetches language', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::Sidebar::Edit::Text
+                      @primaryTranslation = {{this.primaryTranslation}}
+                    />
+                */
+                {
+                  id: "MqlTlBOj",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/sidebar/edit/text\",[],[[\"@primaryTranslation\"],[[23,0,[\"primaryTranslation\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.deepEqual(this.portalDesignerTranslations.primaryLanguage, {
+                  "id": "en",
+                  "primary": true,
+                  "value": "English"
+                }, 'Primary language is updated');
+                assert.equal(this.portalDesignerTranslations.supportedLanguages.length, 3, 'secondary languages fetched');
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/sidebar/edit/text/settings/component-test", ["qunit", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "@ember/test-helpers"], function (_qunit, _emberQunit, _testSupport, _intl, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var PRIMARY_TRANSLATION = "Hi, how can we help you ?";
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    },
+    "da": {
+      "portal": {
+        "home_title": "Hi in Danish"
+      }
+    }
+  };
+  (0, _qunit.module)('Integration | Component | portal-designer/sidebar/edit/text/settings', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _testSupport.setupMirage)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach(function () {
+      this.server.loadFixtures('languages');
+      var translationService = this.owner.lookup('service:portal-designer-translations');
+      Ember.set(translationService, 'primaryLanguage', {
+        id: 'en',
+        value: 'English'
+      });
+      Ember.set(translationService, 'translationsLangPath', "portal.home_title");
+      Ember.set(translationService, 'customTranslations', MOCK_TRANSLATIONS);
+      Ember.set(this, 'primaryTranslation', PRIMARY_TRANSLATION);
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                    <PortalDesigner::Sidebar::Edit::Text::Settings
+                     @primaryTranslation = {{this.primaryTranslation}}
+                    />
+                */
+                {
+                  id: "HGfpVPME",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[5,\"portal-designer/sidebar/edit/text/settings\",[],[[\"@primaryTranslation\"],[[23,0,[\"primaryTranslation\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.equal(this.element.querySelector('[data-test-id="translation-text-primary"]').innerText.trim(), 'Hi, how can we help you ?', 'primary translation renders correctly');
+                assert.equal(this.element.querySelector('[data-test-id="secondary-translation-info"').innerText.trim(), "Secondary languages (1)", 'secondary translations count renders correctly');
+                _context.next = 6;
+                return (0, _testHelpers.click)('[data-test-id="add-translation-button"]');
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/topbar-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl"], function (_qunit, _emberQunit, _testHelpers, _intl) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/topbar', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    (0, _qunit.test)('it renders topbar', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.set('model', {
+                  "portal_version": {
+                    "content": {},
+                    "description": "1. Added New Banner \\n 2. Added new tabs",
+                    "id": 5,
+                    "portal_id": 1,
+                    "published_by": {
+                      "email": "sample@freshservice.com",
+                      "id": 1,
+                      "name": "Support"
+                    },
+                    "title": "Banner & Tabs",
+                    "updated_at": "2021-10-19T02:38:11+05:30"
+                  }
+                });
+                _context.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::Topbar @model={{this.model}}/>
+                */
+                {
+                  id: "jaA4IFZJ",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/topbar\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.dom('.page-switcher').exists();
+                assert.dom('.editor-status').exists();
+                assert.dom('.version-options').exists();
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+});
+define("freshservice/tests/integration/components/portal-designer/version-options-test", ["qunit", "ember-qunit", "@ember/test-helpers", "freshservice/tests/lib/intl"], function (_qunit, _emberQunit, _testHelpers, _intl) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | portal-designer/version-options', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    (0, _intl.setupTranslations)(hooks);
+    hooks.beforeEach( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.intl = this.owner.lookup("service:intl");
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+    hooks.after(function () {
+      this.owner.destroy("service:intl");
+    });
+    (0, _qunit.test)('it renders manage versions dropdown button', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.set('model', {
+                  "content": {},
+                  "description": "1. Added New Banner \\n 2. Added new tabs",
+                  "id": 5,
+                  "portal_id": 1,
+                  "published_by": {
+                    "email": "sample@freshservice.com",
+                    "id": 1,
+                    "name": "Support"
+                  },
+                  "title": "Banner & Tabs",
+                  "updated_at": "2021-10-19T02:38:11+05:30",
+                  "draft": false
+                });
+                _context2.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::VersionOptions @model={{this.model}}/>
+                */
+                {
+                  id: "UxOKq9EI",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/version-options\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.dom('.version-options').exists();
+                assert.dom('div.btn').exists();
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('when draft is true, Publish button is enabled', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.set('model', {
+                  "content": {},
+                  "description": "1. Added New Banner \\n 2. Added new tabs",
+                  "id": 5,
+                  "portal_id": 1,
+                  "published_by": {
+                    "email": "sample@freshservice.com",
+                    "id": 1,
+                    "name": "Support"
+                  },
+                  "title": "Banner & Tabs",
+                  "updated_at": "2021-10-19T02:38:11+05:30",
+                  "draft": true
+                });
+                _context3.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::VersionOptions @model={{this.model}}/>
+                */
+                {
+                  id: "UxOKq9EI",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/version-options\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.equal(this.element.querySelector('.btn.btn-primary').disabled, false);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('when draft is false, Publish button is enabled', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(assert) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.set('model', {
+                  "content": {},
+                  "description": "1. Added New Banner \\n 2. Added new tabs",
+                  "id": 5,
+                  "portal_id": 1,
+                  "published_by": {
+                    "email": "sample@freshservice.com",
+                    "id": 1,
+                    "name": "Support"
+                  },
+                  "title": "Banner & Tabs",
+                  "updated_at": "2021-10-19T02:38:11+05:30",
+                  "draft": false
+                });
+                _context4.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  <PortalDesigner::VersionOptions @model={{this.model}}/>
+                */
+                {
+                  id: "UxOKq9EI",
+                  block: "{\"symbols\":[],\"statements\":[[5,\"portal-designer/version-options\",[],[[\"@model\"],[[23,0,[\"model\"]]]]]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                assert.equal(this.element.querySelector('.btn.btn-primary').disabled, true);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+});
 define("freshservice/tests/integration/components/relationship-map/component-test", ["qunit", "@ember/test-helpers", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/lib/sinon-context", "ember-qunit", "sinon", "freshservice/tests/lib/spy-flash-message", "freshservice/tests/pages/components/relationship-map", "freshservice/constants/relationship-map"], function (_qunit, _testHelpers, _testSupport, _intl, _sinonContext, _emberQunit, _sinon, _spyFlashMessage, _relationshipMap, _relationshipMap2) {
   "use strict";
 
@@ -60030,6 +62387,141 @@ define("freshservice/tests/integration/components/ui-components/attach-files/com
     }());
   });
 });
+define("freshservice/tests/integration/components/ui-components/color-input/component-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  (0, _qunit.module)('Integration | Component | ui-components/color-input', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks);
+    hooks.beforeEach(function () {
+      this.set('onChange', function () {});
+    });
+    (0, _qunit.test)('it renders', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <UiComponents::ColorInput
+                        @value="#abcdef"
+                        @onChange={{this.onChange}} 
+                      />
+                    
+                */
+                {
+                  id: "4vI7teQA",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"ui-components/color-input\",[],[[\"@value\",\"@onChange\"],[\"#abcdef\",[23,0,[\"onChange\"]]]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="color-input-wrapper"]').hasAttribute('style', 'background: #abcdef');
+                assert.dom('[data-test-id="color-input-wrapper"]').doesNotHaveClass('transparent');
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should add transparent class and no style for transparent color', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(assert) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <UiComponents::ColorInput
+                        @value="#00000000"
+                        @onChange={{this.onChange}} 
+                      />
+                    
+                */
+                {
+                  id: "IZAX8q26",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"ui-components/color-input\",[],[[\"@value\",\"@onChange\"],[\"#00000000\",[23,0,[\"onChange\"]]]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 2:
+                assert.dom('[data-test-id="color-input-wrapper"]').doesNotHaveAttribute('style');
+                assert.dom('[data-test-id="color-input-wrapper"]').hasClass('transparent');
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    (0, _qunit.test)('should change color and trigger external action on input', /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(assert) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.set('onInput', function (event) {
+                  assert.equal(event.target.value, '#111111');
+                });
+                _context3.next = 3;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  
+                      <UiComponents::ColorInput
+                        @value="#00000000"
+                        @onChange={{this.onChange}} 
+                        @onInput={{this.onInput}}
+                      />
+                    
+                */
+                {
+                  id: "iSJAcniI",
+                  block: "{\"symbols\":[],\"statements\":[[0,\"\\n      \"],[5,\"ui-components/color-input\",[],[[\"@value\",\"@onChange\",\"@onInput\"],[\"#00000000\",[23,0,[\"onChange\"]],[23,0,[\"onInput\"]]]]],[0,\"\\n    \"]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 3:
+                _context3.next = 5;
+                return (0, _testHelpers.fillIn)('input[type="color"]', '#111111');
+
+              case 5:
+                assert.dom('[data-test-id="color-input-wrapper"]').hasAttribute('style', 'background: #111111');
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
+  });
+});
 define("freshservice/tests/integration/components/ui-components/common-module/entity-templates/component-test", ["qunit", "ember-qunit", "ember-cli-mirage/test-support", "freshservice/tests/lib/intl", "freshservice/tests/lib/sinon-context", "@ember/test-helpers", "freshservice/tests/pages/components/ui-components/common-module/entity-templates", "freshservice/constants/tickets/module-config", "freshservice/tests/pages/components/utils/form-fields", "freshservice/mirage/fixtures/ticket-templates", "sinon", "ember-local-storage/test-support/reset-storage", "ember-power-select/test-support", "freshservice/tests/lib/spy-flash-message"], function (_qunit, _emberQunit, _testSupport, _intl, _sinonContext, _testHelpers, _entityTemplates, _moduleConfig, _formFields, _ticketTemplates, _sinon, _resetStorage, _testSupport2, _spyFlashMessage) {
   "use strict";
 
@@ -62351,7 +64843,7 @@ define("freshservice/tests/integration/components/ui-components/common-module/ne
     });
   };
 
-  (0, _qunit.module)('Integration | Component | ui-components/common-module/new-form - sample', function (hooks) {
+  (0, _qunit.module)('Integration | Component | ui-components/common-module/new-form', function (hooks) {
     (0, _emberQunit.setupRenderingTest)(hooks);
     (0, _testSupport.setupMirage)(hooks);
     (0, _sinonContext.setupSinonSandbox)(hooks);
@@ -63627,7 +66119,9 @@ define("freshservice/tests/integration/components/ui-components/common-module/ne
 
               case 6:
                 typeField = _context25.sent;
-                assert.equal(typeField.selected, 'Incident', '[Type] field is selected with default value Incident');
+                assert.equal(typeField.selected, this.intl.moduleName('incident', {
+                  capital: true
+                }), '[Type] field is selected with default value Incident');
 
               case 8:
               case "end":
@@ -63672,7 +66166,9 @@ define("freshservice/tests/integration/components/ui-components/common-module/ne
 
               case 8:
                 typeField = _context26.sent;
-                assert.equal(typeField.selected, 'Service Request', '[Type] field is selected with Service Request');
+                assert.equal(typeField.selected, this.intl.moduleName('service_request', {
+                  capital: true
+                }), '[Type] field is selected with Service Request');
                 assert.ok(_newTicket.default.hasRequestedFor);
 
               case 11:
@@ -70134,6 +72630,74 @@ define("freshservice/tests/integration/helpers/file-size-test", ["qunit", "ember
     }());
   });
 });
+define("freshservice/tests/integration/helpers/find-translation-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var CUSTOM_TRANSLATIONS_STUB = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  (0, _qunit.module)('Integration | Helper | find-translation', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // Replace this with your real tests.
+
+    (0, _qunit.test)('it finds respective custom translation', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(assert) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.set('path', 'portal.home_title');
+                this.set('locale', 'en');
+                this.set('customTranslations', CUSTOM_TRANSLATIONS_STUB);
+                _context.next = 5;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  {{find-translation this.path this.locale translations=this.customTranslations}}
+                */
+                {
+                  id: "0LPinkVb",
+                  block: "{\"symbols\":[],\"statements\":[[1,[28,\"find-translation\",[[23,0,[\"path\"]],[23,0,[\"locale\"]]],[[\"translations\"],[[23,0,[\"customTranslations\"]]]]],false]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 5:
+                assert.equal(this.element.textContent.trim(), 'How can we help you ?');
+                this.set('locale', 'fr');
+                _context.next = 9;
+                return (0, _testHelpers.render)(Ember.HTMLBars.template(
+                /*
+                  {{find-translation this.path this.locale translations=this.customTranslations}}
+                */
+                {
+                  id: "0LPinkVb",
+                  block: "{\"symbols\":[],\"statements\":[[1,[28,\"find-translation\",[[23,0,[\"path\"]],[23,0,[\"locale\"]]],[[\"translations\"],[[23,0,[\"customTranslations\"]]]]],false]],\"hasEval\":false}",
+                  meta: {}
+                }));
+
+              case 9:
+                assert.equal(this.element.textContent.trim(), '');
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+});
 define("freshservice/tests/integration/helpers/get-date-time-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
   "use strict";
 
@@ -71569,6 +74133,7 @@ define("freshservice/tests/lib/stub-current-user", ["exports", "@ember/test-help
       groups: Ember.A([]),
       starred_ticket_filters: Ember.A([]),
       userData: userData,
+      currentAccount: Ember.inject.service(),
       hasAbility: function hasAbility(privilege) {
         return this.privileges.indexOf(privilege) > -1;
       },
@@ -71665,6 +74230,12 @@ define("freshservice/tests/lib/stub-current-user", ["exports", "@ember/test-help
       },
       hasCurrentUserScopeAbility: function hasCurrentUserScopeAbility(privilege, modelUserId) {
         return this.hasAbilities(privilege) || this.userId === modelUserId;
+      },
+      hasBetaFeatureEnabled: function hasBetaFeatureEnabled(featureName, userPreferenceKey) {
+        return this.currentAccount.hasTempFeature(featureName) && Ember.get(this, "userData.preferences.".concat(userPreferenceKey));
+      },
+      hasEmberTicketFeatureEnabled: function hasEmberTicketFeatureEnabled(featureName) {
+        return this.currentAccount.hasTempFeature(featureName);
       }
     });
   };
@@ -73238,7 +75809,6 @@ define("freshservice/tests/pages/components/module-ams/alert-details", ["exports
     BREADCRUMB_TITLE: ".ember-breadcrumbs .title",
     ALERT_SUBJECT: ".alert-details-header .subject",
     ALERT_DATE_TIME_DETAILS: ".alert-details-header [data-test-id='date-time-details']",
-    ALERT_PROFILE_DETAILS: ".alert-details-header [data-test-id='alert-profile-details']",
     ALERT_DESCRIPTION: ".alert-details-header .description",
     ACTION_ASSOCIATE_BTN: ".bulk-action-options .associate-grp",
     TABS: ".tabs .alert-details-tabs li",
@@ -73282,7 +75852,6 @@ define("freshservice/tests/pages/components/module-ams/alert-details", ["exports
     breadcrumbTitle: (0, _emberCliPageObject.text)(SELECTORS.BREADCRUMB_TITLE),
     alertSubjectText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_SUBJECT),
     alertDateTimeDetailsText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_DATE_TIME_DETAILS),
-    alertProfileDetailsText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_PROFILE_DETAILS),
     alertDescriptionText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_DESCRIPTION),
     alertPropertiesTitleText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_PROPERTIES.TITLE),
     alertPropertiesSeverityText: (0, _emberCliPageObject.text)(SELECTORS.ALERT_PROPERTIES.SEVERITY_BADGE),
@@ -73308,7 +75877,6 @@ define("freshservice/tests/pages/components/module-ams/alert-details", ["exports
     // visible
     isSubjectVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ALERT_SUBJECT),
     isDateTimeDetailsVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ALERT_DATE_TIME_DETAILS),
-    isAlertProfileDetailsVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ALERT_PROFILE_DETAILS),
     isDescriptionVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ALERT_DESCRIPTION),
     isAssociationBtnVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ACTION_ASSOCIATE_BTN),
     isAlertPropertiesVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.ALERT_PROPERTIES.SELECTOR),
@@ -73574,6 +76142,34 @@ define("freshservice/tests/pages/components/module-ams/bulk-actions", ["exports"
     subjectFieldValue: (0, _emberCliPageObject.value)(SELECTORS.NEW_INCIDENT.SUBJECT),
     // form fields
     formUtils: _formFields.default
+  });
+
+  _exports.default = _default;
+});
+define("freshservice/tests/pages/components/module-ams/delete-service", ["exports", "ember-cli-page-object"], function (_exports, _emberCliPageObject) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  // Selectors
+  var SELECTORS = {
+    OVERVIEW_TAB: '.title-header',
+    DROPDOWN_BTN: '.ember-basic-dropdown-trigger',
+    DROPDOWN_CONTENT: '.ember-basic-dropdown-content',
+    DELETE_OPT: '.ember-basic-dropdown-content [data-test-id="open-delete-popup"]',
+    INTEGRATIONT_AB: '.tabs__items .tabs__item:nth-child(5)',
+    DELETE_BTN: '[data-test-id="service-delete-btn"]'
+  };
+
+  var _default = (0, _emberCliPageObject.create)({
+    isDetailsVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.OVERVIEW_TAB),
+    isDropDownVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.DROPDOWN_CONTENT),
+    clickDropDownBtn: (0, _emberCliPageObject.clickable)(SELECTORS.DROPDOWN_BTN),
+    clickDeleteBtn: (0, _emberCliPageObject.clickable)(SELECTORS.DELETE_OPT),
+    clickIntegrationTab: (0, _emberCliPageObject.clickable)(SELECTORS.INTEGRATIONT_AB),
+    clickDeleteService: (0, _emberCliPageObject.clickable)(SELECTORS.DELETE_BTN)
   });
 
   _exports.default = _default;
@@ -74519,8 +77115,14 @@ define("freshservice/tests/pages/components/module-service-request/detail", ["ex
     },
     REQUESTER_INFO: {
       REQUESTER_FIELD: '[data-test-field-name="email"]',
+      REQUESTER_FIELD_TRIGGER: '[data-test-field-name="email"] .ember-power-select-trigger',
+      REQUESTER_FIELD_INPUT: '[data-test-field-name="email"] input',
       ADD_CC_FIELD: '[data-test-field-name="ccEmails"]',
+      ADD_CC_FIELD_INPUT: '[data-test-field-name="ccEmails"] input',
+      ADD_CC_FIELD_CLEAR_BTN: '[data-test-field-name="ccEmails"] .ember-power-select-multiple-remove-btn[data-selected-index="0"]',
       REQUEST_FOR_FIELD: '[data-test-field-name="requestedFor"]',
+      REQUEST_FOR_FIELD_TRIGGER: '[data-test-field-name="requestedFor"] .ember-power-select-trigger',
+      REQUEST_FOR_FIELD_INPUT: '[data-test-field-name="requestedFor"] input',
       BTN_ADD_CC: '#add-cc-btn',
       CHK_REQ_FOR: '[name="service-request[showRequestFor]"]',
       REQUESTER_FIELD_SELECTED: '[data-test-field-name="email"] .ember-basic-dropdown',
@@ -74538,7 +77140,7 @@ define("freshservice/tests/pages/components/module-service-request/detail", ["ex
       LIST_ITEM: '.attachment-list .list-file-item',
       INPUT: 'input#attach_file',
       DELETE: '.delete-file',
-      ERROR_MESSAGE: '[data-test-id="attachment-error"]'
+      ERROR_MESSAGE: '.attach-files .field-required-error'
     },
     ADDITIONAL_ITEMS: {
       LIST_CONTAINER: '[data-test-id="child-items-container"]',
@@ -74595,14 +77197,19 @@ define("freshservice/tests/pages/components/module-service-request/detail", ["ex
     reqInfo: {
       reqFieldVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.REQUESTER_INFO.REQUESTER_FIELD),
       reqFieldValue: (0, _emberCliPageObject.text)(SELECTORS.REQUESTER_INFO.REQUESTER_FIELD_SELECTED),
+      clickReqField: (0, _emberCliPageObject.clickable)(SELECTORS.REQUESTER_INFO.REQUESTER_FIELD_TRIGGER),
+      fillReqField: (0, _emberCliPageObject.fillable)(SELECTORS.REQUESTER_INFO.REQUESTER_FIELD_INPUT),
       addCCVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.REQUESTER_INFO.ADD_CC_FIELD),
       clickBtnAddCC: (0, _emberCliPageObject.clickable)(SELECTORS.REQUESTER_INFO.BTN_ADD_CC),
       CcBtnText: (0, _emberCliPageObject.text)(SELECTORS.REQUESTER_INFO.BTN_ADD_CC),
+      fillAddCC: (0, _emberCliPageObject.fillable)(SELECTORS.REQUESTER_INFO.ADD_CC_FIELD_INPUT),
+      clearAddCC: (0, _emberCliPageObject.clickable)(SELECTORS.REQUESTER_INFO.ADD_CC_FIELD_CLEAR_BTN),
       reqForCheckboxVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.REQUESTER_INFO.CHK_REQ_FOR),
       reqForCheckboxChecked: (0, _emberCliPageObject.property)('checked', SELECTORS.REQUESTER_INFO.CHK_REQ_FOR),
       clickReqForCheckbox: (0, _emberCliPageObject.clickable)(SELECTORS.REQUESTER_INFO.CHK_REQ_FOR),
       reqForFieldVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.REQUESTER_INFO.REQUEST_FOR_FIELD),
-      addNewReqModalVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.REQUESTER_INFO.ADD_NEW_REQ_MODAL)
+      clickReqForField: (0, _emberCliPageObject.clickable)(SELECTORS.REQUESTER_INFO.REQUEST_FOR_FIELD_TRIGGER),
+      fillReqForField: (0, _emberCliPageObject.fillable)(SELECTORS.REQUESTER_INFO.REQUEST_FOR_FIELD_INPUT)
     },
     loanerFields: {
       locationFieldIsVisible: (0, _emberCliPageObject.isVisible)(SELECTORS.LOANER_ITEM_FIELDS.LOCATION_FIELD),
@@ -74948,6 +77555,10 @@ define("freshservice/tests/pages/components/module-solutions/article", ["exports
         modalExists: (0, _emberCliPageObject.isVisible)('.froala-insert-code-modal'),
         submit: (0, _emberCliPageObject.clickable)('.froala-submit-code-insert'),
         fillCode: (0, _emberCliPageObject.fillable)('.froala-insert-code-modal textarea')
+      },
+      codeView: {
+        viewCode: (0, _emberCliPageObject.clickable)('[data-cmd="html"]'),
+        fillCode: (0, _emberCliPageObject.fillable)('.fr-code')
       },
       // attachments
       addAttachment: function addAttachment(fileName) {
@@ -75438,8 +78049,8 @@ define("freshservice/tests/pages/components/module-tickets/conversation", ["expo
       clearBccField: (0, _emberCliPageObject.clickable)('[data-test-id="clear-bcc-btn"]'),
       ccField: (0, _emberCliPageObject.isVisible)('[data-test-id="cc-field"]'),
       bccField: (0, _emberCliPageObject.isVisible)('[data-test-id="bcc-field"]'),
-      hasCcValue: (0, _emberCliPageObject.count)('[data-test-id="cc-field"] .cc-field ul li'),
-      hasBccValue: (0, _emberCliPageObject.count)('[data-test-id="bcc-field"] .bcc-field ul li'),
+      hasCcValue: (0, _emberCliPageObject.count)('[data-test-id="cc-field"] .cc-field ul li.ember-power-select-multiple-option'),
+      hasBccValue: (0, _emberCliPageObject.count)('[data-test-id="bcc-field"] .bcc-field ul li.ember-power-select-multiple-option'),
       replySubmit: (0, _emberCliPageObject.clickable)('[data-test-id="reply-submit"]'),
       replyCancel: (0, _emberCliPageObject.clickable)('[data-test-id="reply-cancel"]'),
       forwardSubmit: (0, _emberCliPageObject.clickable)('[data-test-id="forward-submit"]'),
@@ -75852,8 +78463,8 @@ define("freshservice/tests/pages/components/module-tickets/new-ticket", ["export
     section3TextField1Content: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_text_1"] input[type="text"]'),
     section3ParaField1Content: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_para_1"] textarea'),
     section3CheckboxFieldValue: (0, _emberCliPageObject.property)('checked', '[data-test-field-name="customFields.sec_3_cb_1"] input'),
-    section3NumberFieldValue: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_num_1"] input[type="number"]'),
-    section3DecimalFieldValue: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_decimal_1"] input[type="number"]'),
+    section3NumberFieldValue: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_num_1"] input[type="text"]'),
+    section3DecimalFieldValue: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_3_decimal_1"] input[type="text"]'),
     section2TextField1Content: (0, _emberCliPageObject.value)('[data-test-field-name="customFields.sec_2_text_1"] input[type="text"]'),
     validationFailedFields: (0, _emberCliPageObject.attribute)('data-test-field-name', '.form-field--has-errors', {
       multiple: true
@@ -76850,7 +79461,7 @@ define("freshservice/tests/pages/components/utils/form-fields", ["exports", "emb
     getDataForField: function getDataForField(fieldName) {
       var _arguments2 = arguments;
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-        var getOptions, field, label, options, selected, properties, _options, _field$querySelector$, _field$querySelector$2, _field$querySelector$3, _field$querySelector$4, _field$querySelector$5, dateValue, timeValue;
+        var getOptions, field, label, options, selected, properties, _options, _field$querySelector$, _field$querySelector$2, _field$querySelector$3, _field$querySelector$4, _field$querySelector, _field$querySelector$5, dateValue, timeValue;
 
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
@@ -76949,7 +79560,7 @@ define("freshservice/tests/pages/components/utils/form-fields", ["exports", "emb
                   selected = (_field$querySelector$3 = field.querySelector('input[type="text"].date-text-field').value) === null || _field$querySelector$3 === void 0 ? void 0 : _field$querySelector$3.trim();
                 } else if (field.classList.contains('date-time-split-field')) {
                   dateValue = (_field$querySelector$4 = field.querySelector('input[type="text"].date-text-field').value) === null || _field$querySelector$4 === void 0 ? void 0 : _field$querySelector$4.trim();
-                  timeValue = (_field$querySelector$5 = field.querySelector('.time-picker-wrapper .ember-power-select-selected-item').innerText) === null || _field$querySelector$5 === void 0 ? void 0 : _field$querySelector$5.trim();
+                  timeValue = (_field$querySelector = field.querySelector('.time-picker-wrapper .ember-power-select-selected-item')) === null || _field$querySelector === void 0 ? void 0 : (_field$querySelector$5 = _field$querySelector.innerText) === null || _field$querySelector$5 === void 0 ? void 0 : _field$querySelector$5.trim();
                   selected = [dateValue, timeValue];
                 }
 
@@ -78212,6 +80823,19 @@ define("freshservice/tests/unit/models/integrations/pivotal-tracker-test", ["qun
     });
   });
 });
+define("freshservice/tests/unit/models/language-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Model | language', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks); // Replace this with your real tests.
+
+    (0, _qunit.test)('it exists', function (assert) {
+      var store = this.owner.lookup('service:store');
+      var model = store.createRecord('language', {});
+      assert.ok(model);
+    });
+  });
+});
 define("freshservice/tests/unit/models/task-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
   "use strict";
 
@@ -78952,6 +81576,61 @@ define("freshservice/tests/unit/services/native-integration-test", ["qunit", "em
     (0, _qunit.test)('it exists', function (assert) {
       var service = this.owner.lookup('service:native-integration');
       assert.ok(service);
+    });
+  });
+});
+define("freshservice/tests/unit/services/portal-designer-translations-test", ["qunit", "ember-qunit", "freshservice/constants/portal-designer/placeholders"], function (_qunit, _emberQunit, _placeholders) {
+  "use strict";
+
+  var MOCK_TRANSLATIONS = {
+    "en": {
+      "portal": {
+        "home_title": "How can we help you ?"
+      }
+    }
+  };
+  var BUILDER_SERVICE_STUB = Ember.Service.extend({
+    translations: MOCK_TRANSLATIONS
+  });
+  (0, _qunit.module)('Unit | Service | portal-designer-translations', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks);
+    hooks.beforeEach(function () {
+      this.owner.register('service:portal-builder', BUILDER_SERVICE_STUB);
+    }); // Replace this with your real tests.
+
+    (0, _qunit.test)('it exists', function (assert) {
+      var service = this.owner.lookup('service:portal-designer-translations');
+      assert.ok(service);
+    });
+    (0, _qunit.test)('it updates translation', function (assert) {
+      var service = this.owner.lookup('service:portal-designer-translations');
+      service.set('customTranslations', {});
+      service.updateTranslation('en.portal.home_title', 'How are you ?');
+      assert.equal(service.customTranslations.en.portal.home_title, 'How are you ?', 'translation updated');
+    });
+    (0, _qunit.test)('it updates placeholders', function (assert) {
+      var service = this.owner.lookup('service:portal-designer-translations');
+      service.updatePlaceholders(["user_info.first_name", "portal.name"]);
+      assert.deepEqual(service.usedPlaceholders, ["{{user_info.first_name}}", "{{portal.name}}"], "used placeholders updated");
+      Ember.set(service, 'placeholderForPortal', false);
+      var allowedPlaceholders = service.allowedPlaceholderOptions;
+      var allowedPlaceholdersExpected = [{
+        "category": "Requester",
+        "placeholders": [{
+          "name": "Requester first name",
+          "value": "{{user_info.first_name}}"
+        }]
+      }, {
+        "category": "Helpdesk",
+        "placeholders": [{
+          "name": "Helpdesk name",
+          "value": "{{portal.name}}"
+        }]
+      }];
+      assert.deepEqual(allowedPlaceholders, allowedPlaceholdersExpected, 'allowed placeholders updated');
+      Ember.set(service, 'placeholderForPortal', true);
+      var placeholderForPortal = service.allowedPlaceholderOptions;
+      assert.deepEqual(placeholderForPortal, _placeholders.default, 'allowed all placeholders for portal');
     });
   });
 });
@@ -80585,7 +83264,7 @@ define("freshservice/tests/unit/validators/multi-select-field-email-validator-te
 define('freshservice/config/environment', [], function() {
   
           var exports = {
-            'default': {"marketplaceFreshParentUrl":"https://static.freshcloud.io/fdk/2.0/assets/fresh_parent.js","freshReleasePlatform":{"routeName":"projects","routePath":"project_management"},"modulePrefix":"freshservice","environment":"test","rootURL":"/a/","locationType":"none","EmberENV":{"FEATURES":{},"EXTEND_PROTOTYPES":false,"LOG_STACKTRACE_ON_DEPRECATION":false,"_APPLICATION_TEMPLATE_WRAPPER":false,"_DEFAULT_ASYNC_OBSERVERS":true,"_JQUERY_INTEGRATION":false,"_TEMPLATE_ONLY_GLIMMER_COMPONENTS":true},"APP":{"rootElement":"#ember-testing","LOG_ACTIVE_GENERATION":false,"LOG_VIEW_LOOKUPS":false,"autoboot":false,"renderInEmber":true,"hostURL":"http://localhost.freshservice-dev.com:4000","name":"freshservice","version":"0.0.1+3f6d0c7a"},"OPTIONS":{"test":true,"fingerprint":{"enabled":false,"extensions":["js","css","png","jpg","gif","json","svg","js"],"prepend":"http://localhost.freshservice-dev.com:7357/","exclude":["assets/fs-chunk-**"]},"outputPaths":{"app":{"css":{"app":"/assets/freshservice.css","modules/admin/main":"/assets/modules/styles/admin.css","modules/ams/main":"/assets/modules/styles/ams.css","modules/services/main":"/assets/modules/styles/services.css","modules/assets/main":"/assets/modules/styles/assets.css","modules/projects/main":"/assets/modules/styles/projects.css","modules/purchase-order/main":"/assets/modules/styles/purchase-order.css","modules/sam/main":"/assets/modules/styles/sam.css","modules/solutions/main":"/assets/modules/styles/solutions.css","modules/dashboard/main":"/assets/modules/styles/dashboard.css","modules/leaderboard/main":"/assets/modules/styles/leaderboard.css","modules/quest/main":"/assets/modules/styles/quest.css","modules/approvals/main":"/assets/modules/styles/approvals.css","modules/tickets/main":"/assets/modules/styles/tickets.css","modules/catalog/main":"/assets/modules/styles/catalog.css","modules/workloads/main":"/assets/modules/styles/workloads.css"}}},"sourcemaps":{"enabled":false},"minifyCSS":{"enabled":true},"minifyJS":{"enabled":true},"babel":{"plugins":["/Users/sreeramv/Documents/ws/itil/frontend/node_modules/ember-auto-import/babel-plugin/index.js"]},"autoImport":{"alias":{"froala-editor":"froala-editor/js/froala_editor.pkgd.min.js"},"webpack":{"output":{"chunkFilename":"fs-chunk-[name]-[chunkhash].js"}}},"svgJar":{"rootURL":"/a/","sourceDirs":["public/assets/inline-svg","node_modules/collab-ui/public/assets/images"],"optimizer":{"plugins":[{"cleanupIDs":{"minify":false}}]}},"emberHighCharts":{"includeHighCharts":false},"ember-cli-babel":{"includePolyfill":true},"ember-froala-editor":{"plugins":true,"languages":true,"dynamicImportFroala":true},"ember-service-worker":{"enabled":false,"unregister":false,"versionStrategy":"every-build"},"esw-cache-first":{"api_name":"FS-api-cache","apiPatterns":["/api/_/bootstrap/agents_groups","/api/_/ticket_form_fields"]},"hinting":false,"stylelint":{"generateTests":false,"testFailingFiles":false,"testPassingFiles":false}},"moment":{"includeTimezone":"all","includeLocales":["ar","ca","cs","da","de","en","es-do","es","et","fi","fr","hu","id","it","ja","ko","nb","nl","pl","pt-br","pt","ru","sk","sl","sv","tr","vi","zh-cn","uk","he","th","cy","zh-tw","ro","lv","hr"],"allowEmpty":true},"ember-cli-mirage":{"enabled":true,"usingProxy":false,"useDefaultPassthroughs":true},"ember-froala-editor":{"key":"QFF4nB16B10A8A6F6C5A4fLUQZa1ASFe1EFRNc1He1BCCQDUHnD5D4B3C3C3D7A5C2F5A3=="},"buildEnvironment":"test","ember-form-for":{"errorsPath":"validations.attrs.PROPERTY_NAME.errors"},"stackTraceLimit":30,"exportApplicationGlobal":true,"emberHifi":{"debug":false,"connections":[{"name":"NativeAudio","config":{}},{"name":"HLS","config":{}},{"name":"Howler","config":{}}]},"ember-modal-dialog":{},"ember-a11y-testing":{"componentOptions":{"turnAuditOff":true,"excludeAxeCore":true,"axeOptions":{"iframes":false,"reporter":"v2","resultTypes":["violations"],"rules":{"duplicate-id":{"enabled":false},"duplicate-id-active":{"enabled":false},"duplicate-id-aria":{"enabled":false}}}}}}
+            'default': {"marketplaceFreshParentUrl":"https://static.freshcloud.io/fdk/2.0/assets/fresh_parent.js","freshReleasePlatform":{"routeName":"projects","routePath":"project_management"},"modulePrefix":"freshservice","environment":"test","rootURL":"/a/","locationType":"none","EmberENV":{"FEATURES":{},"EXTEND_PROTOTYPES":false,"LOG_STACKTRACE_ON_DEPRECATION":false,"_APPLICATION_TEMPLATE_WRAPPER":false,"_DEFAULT_ASYNC_OBSERVERS":true,"_JQUERY_INTEGRATION":false,"_TEMPLATE_ONLY_GLIMMER_COMPONENTS":true},"APP":{"rootElement":"#ember-testing","LOG_ACTIVE_GENERATION":false,"LOG_VIEW_LOOKUPS":false,"autoboot":false,"renderInEmber":true,"hostURL":"http://localhost.freshservice-dev.com:4000","name":"freshservice","version":"0.0.1+34a9c59a"},"OPTIONS":{"test":true,"fingerprint":{"enabled":false,"extensions":["js","css","png","jpg","gif","json","svg","js"],"prepend":"http://localhost.freshservice-dev.com:7357/","exclude":["assets/fs-chunk-**"]},"outputPaths":{"app":{"css":{"app":"/assets/freshservice.css","modules/admin/main":"/assets/modules/styles/admin.css","modules/ams/main":"/assets/modules/styles/ams.css","modules/services/main":"/assets/modules/styles/services.css","modules/assets/main":"/assets/modules/styles/assets.css","modules/projects/main":"/assets/modules/styles/projects.css","modules/purchase-order/main":"/assets/modules/styles/purchase-order.css","modules/sam/main":"/assets/modules/styles/sam.css","modules/solutions/main":"/assets/modules/styles/solutions.css","modules/dashboard/main":"/assets/modules/styles/dashboard.css","modules/leaderboard/main":"/assets/modules/styles/leaderboard.css","modules/quest/main":"/assets/modules/styles/quest.css","modules/approvals/main":"/assets/modules/styles/approvals.css","modules/tickets/main":"/assets/modules/styles/tickets.css","modules/catalog/main":"/assets/modules/styles/catalog.css","modules/workloads/main":"/assets/modules/styles/workloads.css","modules/portal-designer/main":"/assets/modules/styles/portal-designer.css"}}},"sourcemaps":{"enabled":false},"minifyCSS":{"enabled":true},"minifyJS":{"enabled":true},"babel":{"plugins":["/Users/sreeramv/Documents/ws/itil/frontend/node_modules/ember-auto-import/babel-plugin/index.js"]},"autoImport":{"alias":{"froala-editor":"froala-editor/js/froala_editor.pkgd.min.js"},"webpack":{"output":{"chunkFilename":"fs-chunk-[name]-[chunkhash].js"}}},"svgJar":{"rootURL":"/a/","sourceDirs":["public/assets/inline-svg","node_modules/collab-ui/public/assets/images"],"optimizer":{"plugins":[{"cleanupIDs":{"minify":false}}]}},"emberHighCharts":{"includeHighCharts":false},"ember-cli-babel":{"includePolyfill":true},"ember-froala-editor":{"plugins":true,"languages":true,"dynamicImportFroala":true},"ember-service-worker":{"enabled":false,"unregister":false,"versionStrategy":"every-build"},"esw-cache-first":{"api_name":"FS-api-cache","apiPatterns":["/api/_/bootstrap/agents_groups","/api/_/ticket_form_fields"]},"hinting":false,"stylelint":{"generateTests":false,"testFailingFiles":false,"testPassingFiles":false}},"moment":{"includeTimezone":"all","includeLocales":["ar","ca","cs","da","de","en","es-do","es","et","fi","fr","hu","id","it","ja","ko","nb","nl","pl","pt-br","pt","ru","sk","sl","sv","tr","vi","zh-cn","uk","he","th","cy","zh-tw","ro","lv","hr"],"allowEmpty":true},"ember-cli-mirage":{"enabled":true,"usingProxy":false,"useDefaultPassthroughs":true},"ember-froala-editor":{"key":"QFF4nB16B10A8A6F6C5A4fLUQZa1ASFe1EFRNc1He1BCCQDUHnD5D4B3C3C3D7A5C2F5A3=="},"buildEnvironment":"test","ember-form-for":{"errorsPath":"validations.attrs.PROPERTY_NAME.errors"},"stackTraceLimit":30,"exportApplicationGlobal":true,"emberHifi":{"debug":false,"connections":[{"name":"NativeAudio","config":{}},{"name":"HLS","config":{}},{"name":"Howler","config":{}}]},"ember-modal-dialog":{},"ember-a11y-testing":{"componentOptions":{"turnAuditOff":true,"excludeAxeCore":true,"axeOptions":{"iframes":false,"reporter":"v2","resultTypes":["violations"],"rules":{"duplicate-id":{"enabled":false},"duplicate-id-active":{"enabled":false},"duplicate-id-aria":{"enabled":false}}}}}}
           };
           Object.defineProperty(exports, '__esModule', {value: true});
           return exports;
